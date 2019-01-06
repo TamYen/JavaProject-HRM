@@ -46,5 +46,24 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/quanlinhanvien</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">1234</property>
+    
+    <property name="hibernate.current_session_context_class">thread</property>
+    
+    <!-- Outputs the SQL queries, should be disabled in Production -->
+    <property name="hibernate.show_sql">true</property>
+    
+    <!-- Mapping with model class containing annotations -->
+    <mapping class="ims.model.Chuyennganh"/>
+    <mapping class="ims.model.Dantoc"/>
+    <mapping class="ims.model.Employee"/>
+    <mapping class="ims.model.KhoaDaotao"/>
+    <mapping class="ims.model.Nghenghiep"/>
+    <mapping class="ims.model.Quocgia"/>
+    <mapping class="ims.model.ThanhphanGiadinh"/>
+    <mapping class="ims.model.Tinhthanh"/>
+    <mapping class="ims.model.Tongiao"/>
+    <mapping class="ims.model.TrinhdoDaotao"/>
+    <mapping class="ims.model.TruongDaotao"/>
+    <mapping class="ims.model.Xeploai"/>
   </session-factory>
 </hibernate-configuration>

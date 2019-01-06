@@ -2,18 +2,20 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="InventoryManagementPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>ims.pojo.KhoaDaotao</class>
-    <class>ims.pojo.Xeploai</class>
-    <class>ims.pojo.Tinhthanh</class>
-    <class>ims.pojo.Chuyennganh</class>
-    <class>ims.pojo.TruongDaotao</class>
-    <class>ims.pojo.Dantoc</class>
-    <class>ims.pojo.TrinhdoDaotao</class>
-    <class>ims.pojo.Employee</class>
-    <class>ims.pojo.Tongiao</class>
-    <class>ims.pojo.ThanhphanGiadinh</class>
-    <class>ims.pojo.NgheNghiep</class>
-    <class>ims.pojo.QuocGia</class>
+    <class>ims.model.Tongiao</class>
+    <class>ims.model.Tinhthanh</class>
+    <class>ims.model.KhoaDaotao</class>
+    <class>ims.model.Dantoc</class>
+    <class>ims.model.QuocGia</class>
+    <class>ims.model.Chuyennganh</class>
+    <class>ims.model.Employee</class>
+    <class>ims.model.ThanhphanGiadinh</class>
+    <class>ims.model.Xeploai</class>
+    <class>ims.model.TruongDaotao</class>
+    <class>ims.model.TrinhdoDaotao</class>
+    <class>ims.model.NgheNghiep</class>
+    <class>ims.model.Quocgia</class>
+    <class>ims.model.Nghenghiep</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/quanlinhanvien"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

@@ -118,7 +118,7 @@ public class EmployeeList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNewActionPerformed
-        Employee emGui= new Employee();
+        EmployeeInfo emGui= new EmployeeInfo();
         emGui.setVisible(true);
     }//GEN-LAST:event_btNewActionPerformed
 
