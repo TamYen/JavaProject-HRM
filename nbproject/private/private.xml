@@ -4,7 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/gui/EmployeeList.java</file>
+            <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/dal/XeploaiDAL.java</file>
+            <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/bll/EmployeeBLL.java</file>
             <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/gui/EmployeeInfo.java</file>
+            <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/dal/BaseDAL.java</file>
+            <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/model/Employee.java</file>
+            <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/dal/EmployeeDAL.java</file>
+            <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/ims/dal/HIbernateUtil.java</file>
+            <file>file:/E:/KyII_2018/Lap%20trinh%20java/DOAN/InventoryManagement/src/hibernate.cfg.xml</file>
         </group>
     </open-files>
 </project-private>

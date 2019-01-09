@@ -1,0 +1,70 @@
+﻿--INSERT INTO public.quocgia(ma_quocgia, ten_quocgia) VALUES (1, 'Việt Nam');
+INSERT INTO public.quocgia(ma_quocgia, ten_quocgia) VALUES (2, 'Lào');
+INSERT INTO public.quocgia(ma_quocgia, ten_quocgia) VALUES (3, 'Hàn Quốc');
+
+INSERT INTO public.truong_daotao(id_daotao, ten_daotao) VALUES (1, 'HUTECH');
+INSERT INTO public.truong_daotao(id_daotao, ten_daotao) VALUES (2, 'UIT');
+INSERT INTO public.truong_daotao(id_daotao, ten_daotao) VALUES (3, 'UEF');
+
+INSERT INTO public.khoa_daotao(ma_khoa, ten_khoa, id_daotao)
+	VALUES (1, 'Công nghệ thông tin', 1);
+INSERT INTO public.khoa_daotao(ma_khoa, ten_khoa, id_daotao)
+	VALUES (2, 'Quản trị kinh doanh', 1);
+INSERT INTO public.khoa_daotao(ma_khoa, ten_khoa, id_daotao)
+	VALUES (3, 'Công nghệ thông tin', 2);
+INSERT INTO public.khoa_daotao(ma_khoa, ten_khoa, id_daotao)
+	VALUES (4, 'Quản trị kinh doanh', 2);
+INSERT INTO public.khoa_daotao(ma_khoa, ten_khoa, id_daotao)
+	VALUES (5, 'Công nghệ thông tin', 3);
+INSERT INTO public.khoa_daotao(ma_khoa, ten_khoa, id_daotao)
+	VALUES (6, 'Quản trị kinh doanh', 3);
+
+INSERT INTO public.trinhdo_daotao(ma_trinhdo, trinhdo)VALUES (1, 'Đại học');
+INSERT INTO public.trinhdo_daotao(ma_trinhdo, trinhdo)VALUES (2, 'Thạc sĩ');
+INSERT INTO public.trinhdo_daotao(ma_trinhdo, trinhdo)VALUES (3, 'Trung cấp');
+
+INSERT INTO public.chuyennganh(ma_nganh, ten_nganh, ma_khoa, ma_trinhdo)
+	VALUES (1, 'Công nghệ phần mềm', 1, 1);
+INSERT INTO public.chuyennganh(ma_nganh, ten_nganh, ma_khoa, ma_trinhdo)
+	VALUES (2, 'Khoa học máy tính', 3, 1);
+INSERT INTO public.chuyennganh(ma_nganh, ten_nganh, ma_khoa, ma_trinhdo)
+	VALUES (3, 'Maketting', 6, 2);
+INSERT INTO public.chuyennganh(ma_nganh, ten_nganh, ma_khoa, ma_trinhdo)
+	VALUES (4, 'Công nghệ thông tin', 5, 1);
+INSERT INTO public.chuyennganh(ma_nganh, ten_nganh, ma_khoa, ma_trinhdo)
+	VALUES (5, 'Quản trị kinh doanh', 4, 1);
+
+INSERT INTO public.dantoc(ma_dantoc, dantoc)VALUES (1, 'Kinh');
+INSERT INTO public.dantoc(ma_dantoc, dantoc)VALUES (2, 'Thái');
+
+INSERT INTO public.tongiao(ma_tongiao, ten_tongiao)VALUES (1, 'Không');
+INSERT INTO public.tongiao(ma_tongiao, ten_tongiao)VALUES (2, 'Phật giáo');
+INSERT INTO public.tongiao(ma_tongiao, ten_tongiao)VALUES (3, 'Cao đài');
+
+INSERT INTO public.thanhphan_giadinh(id_tp, ten_thanhphan)VALUES (1, 'Tri thức');
+INSERT INTO public.thanhphan_giadinh(id_tp, ten_thanhphan)VALUES (2, 'Thương nhân');
+
+INSERT INTO public."Tinhthanh"("Ma_tinhthanh", tentinhthanh)VALUES (1, 'Hà nội');
+INSERT INTO public."Tinhthanh"("Ma_tinhthanh", tentinhthanh)VALUES (2, 'Đà nẵng');
+
+INSERT INTO public.nghenghiep(ma_nghe, tennghe)VALUES (1, 'Kỹ sư phần mềm');
+INSERT INTO public.nghenghiep(ma_nghe, tennghe)VALUES (2, 'Giáo viên');
+INSERT INTO public.nghenghiep(ma_nghe, tennghe)VALUES (3, 'Nhân viên kinh doanh');
+
+INSERT INTO public.xeploai(ma_loai, tenloai)VALUES (1, 'Khá');
+INSERT INTO public.xeploai(ma_loai, tenloai)VALUES (2, 'Giỏi');
+
+INSERT INTO public."Employee"(
+	"MaNV", ma_dantoc, ma_tongiao, ma_loai, ma_nghe, id_tp, quoctich, noicap_cmnd,
+	 noicap_hochieu, noisinh, nguyenquan, ma_chamcong, ten_ho_dem, ten, ngay_sinh,
+	 sex, "CMND", "CMND_ngaycap", "Sohochieu", ngaycap_hochieu, hethan_hochieu, 
+	trinhdovanhoa, namtotnghiep, tinhtrang_honnhan, hinhanh, chuyennganh)
+	VALUES ('Nv002', 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 'CC002', 'Nguyễn Văn', 'Tình', '01-01-1991', true, '9876543210', '01-01-2016', '123456788911', '02-02-2016', '02-02-2030', '12/12', 2018, true,null, 1);
+
+INSERT INTO public."Employee"(
+	"MaNV", ma_dantoc, ma_tongiao, ma_loai, ma_nghe, id_tp, quoctich, noicap_cmnd,
+	 noicap_hochieu, noisinh, nguyenquan, ma_chamcong, ten_ho_dem, ten, ngay_sinh,
+	 sex, "CMND", "CMND_ngaycap", "Sohochieu", ngaycap_hochieu, hethan_hochieu, 
+	trinhdovanhoa, namtotnghiep, tinhtrang_honnhan, hinhanh, chuyennganh)
+	VALUES ('Nv001', 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 'CC001', 'Nguyễn Văn', 'Tài', '01-01-1990', true, '0123456789', '01-01-2015', '112233445566', '02-02-2015', '02-02-2030', '12/12', 2018, false, null, 1);
+
