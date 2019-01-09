@@ -44,4 +44,13 @@ public class ChuyennganhBLL {
         }
         return null;
     }
+    
+    public List<TrinhdoDaotao> findTrinhdoDaotao(String Chuyennganh){
+        try {
+            return chuyennganhDAL.findTrinhdoDaotao(Chuyennganh);
+        } catch (Exception ex) {
+            Logger.getLogger(ChuyennganhBLL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

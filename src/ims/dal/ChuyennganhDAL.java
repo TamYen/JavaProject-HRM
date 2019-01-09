@@ -42,7 +42,14 @@ public class ChuyennganhDAL extends BaseDAL{
     
     public List<TrinhdoDaotao> findTrinhdoDaotao(int idChuyennganh) throws Exception{
         List<TrinhdoDaotao> result = new ArrayList<>();
-        result = session.createQuery("SELECT DISTINCT(c.maTrinhdo) from Chuyennganh c where c.maTrinhdo.maTrinhdo = "+idChuyennganh).list();
+        result = session.createQuery("SELECT c.maTrinhdo from Chuyennganh c where c.maNganh = "+idChuyennganh).list();
+        close();
+        return result;
+    }
+    
+    public List<TrinhdoDaotao> findTrinhdoDaotao(String Chuyennganh) throws Exception{
+        List<TrinhdoDaotao> result = new ArrayList<>();
+        result = session.createQuery("SELECT c.maTrinhdo from Chuyennganh c where c.tenNganh = '"+Chuyennganh+"'").list();
         close();
         return result;
     }

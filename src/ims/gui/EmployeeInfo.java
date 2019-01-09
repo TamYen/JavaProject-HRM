@@ -870,6 +870,11 @@ public class EmployeeInfo extends JDialog {
         txtHoTen.setMinimumSize(new java.awt.Dimension(230, 30));
         txtHoTen.setPreferredSize(new java.awt.Dimension(230, 30));
         txtHoTen.setRequestFocusEnabled(false);
+        txtHoTen.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtHoTenFocusGained(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -1027,6 +1032,11 @@ public class EmployeeInfo extends JDialog {
 
         cbxNguyenQuan.setMinimumSize(new java.awt.Dimension(220, 30));
         cbxNguyenQuan.setPreferredSize(new java.awt.Dimension(220, 30));
+        cbxNguyenQuan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxNguyenQuanItemStateChanged(evt);
+            }
+        });
         cbxNguyenQuan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxNguyenQuanActionPerformed(evt);
@@ -1201,6 +1211,19 @@ public class EmployeeInfo extends JDialog {
             setContentCbxTrinhdoDaotao(c.getMaNganh());
     }//GEN-LAST:event_cbxChuyenNganhItemStateChanged
 
+    private void cbxNguyenQuanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxNguyenQuanItemStateChanged
+        // TODO add your handling code here:
+        String s = cbxNguyenQuan.getSelectedItem().toString();
+        txtNguyenQuan.setText(s);
+        txtNoiCapHC.setText(s);
+        txtNoiCapCMND.setText(s);
+    }//GEN-LAST:event_cbxNguyenQuanItemStateChanged
+
+    private void txtHoTenFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoTenFocusGained
+        // TODO add your handling code here:
+        txtHoTen.setText(txtHoDem.getText() + " " + txtTen.getText());
+    }//GEN-LAST:event_txtHoTenFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -1364,6 +1387,7 @@ public class EmployeeInfo extends JDialog {
             cbxKhoaDaoTao.addItem(k);
         }
     }
+    
     private void setContentCbxKhoaDaotao(TruongDaotao id) {
         KhoaDaotaoBLL bll = new KhoaDaotaoBLL();
         List<KhoaDaotao> list = bll.findByUniversity(id);
@@ -1399,6 +1423,13 @@ public class EmployeeInfo extends JDialog {
     private void setContentCbxTrinhdoDaotao(int idChuyennganh) {
         ChuyennganhBLL bll = new ChuyennganhBLL();
         List<TrinhdoDaotao> list = bll.findTrinhdoDaotao(idChuyennganh);
+        for(TrinhdoDaotao t : list){
+            cbxTrinhDoDaoTao.addItem(t);
+        }
+    }
+    private void setContentCbxTrinhdoDaotao(String Chuyennganh) {
+        ChuyennganhBLL bll = new ChuyennganhBLL();
+        List<TrinhdoDaotao> list = bll.findTrinhdoDaotao(Chuyennganh);
         for(TrinhdoDaotao t : list){
             cbxTrinhDoDaoTao.addItem(t);
         }
@@ -1680,11 +1711,7 @@ public class EmployeeInfo extends JDialog {
                 
                 e.setMaLoai(getXeploaiByCombobox());
                 e.setMaNghe(getNghenghiepByCombobox());
-                
-                // set Chuyen nganh
-                Chuyennganh c = getChuyennganhByCombobox();
-                c.setMaTrinhdo(getTrinhdoByCombobox());
-                e.setChuyennganh(c);
+                e.setChuyennganh(getChuyennganhByCombobox());
 
                 return true;
             
