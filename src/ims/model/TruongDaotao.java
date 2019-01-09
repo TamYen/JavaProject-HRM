@@ -96,7 +96,7 @@ public class TruongDaotao implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.TruongDaotao[ idDaotao=" + idDaotao + " ]";
+        return tenDaotao;
     }
     
 }

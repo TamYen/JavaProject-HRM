@@ -5,12 +5,40 @@
  */
 package ims.gui;
 
+import ims.bll.ChuyennganhBLL;
+import ims.bll.DantocBLL;
+import ims.bll.EmployeeBLL;
+import ims.bll.KhoaDaotaoBLL;
+import ims.bll.NghenghiepBLL;
+import ims.bll.QuocgiaBLL;
+import ims.bll.ThanhphanGiadinhBLL;
+import ims.bll.TinhthanhBLL;
+import ims.bll.TongiaoBLL;
+import ims.bll.TruongDaotaoBLL;
+import ims.bll.XeploaiBLL;
+import ims.model.Chuyennganh;
 import ims.model.Dantoc;
 import ims.model.Employee;
+import ims.model.KhoaDaotao;
+import ims.model.Nghenghiep;
+import ims.model.Quocgia;
+import ims.model.ThanhphanGiadinh;
+import ims.model.Tinhthanh;
+import ims.model.Tongiao;
+import ims.model.TrinhdoDaotao;
+import ims.model.TruongDaotao;
+import ims.model.Xeploai;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.Iterator;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -21,24 +49,52 @@ import org.hibernate.cfg.Configuration;
  */
 public class EmployeeInfo extends javax.swing.JFrame {
 
+    private Employee e;
+
+    public Employee getEmployee() {
+        return e;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.e = employee;
+    }
+    
     /**
      * Creates new form Employee
      */
     public EmployeeInfo() {
         initComponents();
-        stateButton(true);
-         setInfoDialog();
+        this.setBackground(Color.yellow);
+        stateButton(false);
+        setInfoDialog();
+        fillInfoCbx();
+        
     }
     
     private static SessionFactory factory;
     
-    
-    public  void setInfoDialog() {
+    private void fillInfoCbx(){
+        setContentCbxQuocTich();
+        setContentCbxDantoc();
+        setContentCbxTonGiao();
+//        setContentCbxChuyenNganh();
+        
+        setContentCbxNgheNghiep();
+        setContentCbxThanhphanGiadinh();
+        setContentCbxNguyenQuan();
+        setContentCbxTrinhdoDaotao();
+        setContentCbxNoiDaotao();
+        setContentCbxXeploai();
+    }
+
+    private  void setInfoDialog() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        System.out.println("width: "+ getWidth()+ " dimension.getWidth(): "+ dimension.getWidth());
+        System.out.println("width: "+ getHeight()+ " dimension.getWidth(): "+ dimension.getHeight());
         int x = (int) ((dimension.getWidth() - getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - getHeight()) / 2);
         setLocation(x, y);        
-        setResizable(false);
+        setResizable(true);
     }
     public void stateButton(boolean value){
         
@@ -113,7 +169,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
-        btnOptionHonNhan = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         panelTop = new javax.swing.JPanel();
         txtMaNV = new javax.swing.JTextField();
         txtTen = new javax.swing.JTextField();
@@ -144,17 +200,20 @@ public class EmployeeInfo extends javax.swing.JFrame {
         btClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(51, 204, 255));
+        setBackground(new java.awt.Color(204, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        setForeground(new java.awt.Color(0, 204, 255));
+        setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         panelRight.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 204, 255))); // NOI18N
-        panelRight.setPreferredSize(new java.awt.Dimension(500, 260));
+        panelRight.setMinimumSize(new java.awt.Dimension(525, 275));
+        panelRight.setPreferredSize(new java.awt.Dimension(525, 275));
         panelRight.setLayout(new java.awt.GridBagLayout());
 
         spnNamTotNghiep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        spnNamTotNghiep.setMinimumSize(new java.awt.Dimension(140, 22));
+        spnNamTotNghiep.setMinimumSize(new java.awt.Dimension(140, 30));
+        spnNamTotNghiep.setPreferredSize(new java.awt.Dimension(140, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
@@ -162,19 +221,19 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelRight.add(spnNamTotNghiep, gridBagConstraints);
 
         txtTrinhDoVanHoa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTrinhDoVanHoa.setMaximumSize(new java.awt.Dimension(300, 20));
-        txtTrinhDoVanHoa.setMinimumSize(new java.awt.Dimension(280, 20));
-        txtTrinhDoVanHoa.setPreferredSize(new java.awt.Dimension(300, 20));
+        txtTrinhDoVanHoa.setMaximumSize(new java.awt.Dimension(320, 30));
+        txtTrinhDoVanHoa.setMinimumSize(new java.awt.Dimension(316, 30));
+        txtTrinhDoVanHoa.setPreferredSize(new java.awt.Dimension(316, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         panelRight.add(txtTrinhDoVanHoa, gridBagConstraints);
 
         cbxChuyenNganh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxChuyenNganh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxChuyenNganh.setMinimumSize(new java.awt.Dimension(256, 20));
+        cbxChuyenNganh.setMinimumSize(new java.awt.Dimension(280, 30));
+        cbxChuyenNganh.setPreferredSize(new java.awt.Dimension(280, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -182,8 +241,13 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelRight.add(cbxChuyenNganh, gridBagConstraints);
 
         cbxUniversity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxUniversity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxUniversity.setMinimumSize(new java.awt.Dimension(256, 20));
+        cbxUniversity.setMinimumSize(new java.awt.Dimension(280, 30));
+        cbxUniversity.setPreferredSize(new java.awt.Dimension(280, 30));
+        cbxUniversity.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxUniversityItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -192,31 +256,34 @@ public class EmployeeInfo extends javax.swing.JFrame {
 
         btnFa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnFa.setText("...");
-        btnFa.setMargin(new java.awt.Insets(1, 3, 1, 1));
+        btnFa.setMargin(new java.awt.Insets(1, -4, 1, -4));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnFa, gridBagConstraints);
 
         btnMajor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnMajor.setText("...");
-        btnMajor.setMargin(new java.awt.Insets(1, 3, 1, 1));
+        btnMajor.setMargin(new java.awt.Insets(1, -4, 1, -4));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnMajor, gridBagConstraints);
 
         btnTrinhdo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnTrinhdo.setText("...");
-        btnTrinhdo.setMargin(new java.awt.Insets(1, 3, 1, 1));
+        btnTrinhdo.setMargin(new java.awt.Insets(1, -4, 1, -4));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnTrinhdo, gridBagConstraints);
 
         cbxXepLoai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxXepLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxXepLoai.setMinimumSize(new java.awt.Dimension(256, 20));
+        cbxXepLoai.setMinimumSize(new java.awt.Dimension(280, 30));
+        cbxXepLoai.setPreferredSize(new java.awt.Dimension(280, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -225,7 +292,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
 
         btnUniversity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnUniversity.setText("...");
-        btnUniversity.setMargin(new java.awt.Insets(1, 3, 1, 1));
+        btnUniversity.setMargin(new java.awt.Insets(1, -4, 1, -4));
         btnUniversity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUniversityActionPerformed(evt);
@@ -234,12 +301,12 @@ public class EmployeeInfo extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnUniversity, gridBagConstraints);
 
         cbxTrinhDoDaoTao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxTrinhDoDaoTao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxTrinhDoDaoTao.setMinimumSize(new java.awt.Dimension(256, 20));
-        cbxTrinhDoDaoTao.setPreferredSize(new java.awt.Dimension(280, 20));
+        cbxTrinhDoDaoTao.setMinimumSize(new java.awt.Dimension(280, 30));
+        cbxTrinhDoDaoTao.setPreferredSize(new java.awt.Dimension(280, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -249,15 +316,21 @@ public class EmployeeInfo extends javax.swing.JFrame {
 
         btnJob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnJob.setText("...");
-        btnJob.setMargin(new java.awt.Insets(1, 3, 1, 1));
+        btnJob.setMargin(new java.awt.Insets(1, -4, 1, -4));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnJob, gridBagConstraints);
 
         cbxKhoaDaoTao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxKhoaDaoTao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxKhoaDaoTao.setMinimumSize(new java.awt.Dimension(256, 20));
+        cbxKhoaDaoTao.setMinimumSize(new java.awt.Dimension(280, 30));
+        cbxKhoaDaoTao.setPreferredSize(new java.awt.Dimension(280, 30));
+        cbxKhoaDaoTao.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxKhoaDaoTaoItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -265,9 +338,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelRight.add(cbxKhoaDaoTao, gridBagConstraints);
 
         cbxNgheNghiep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxNgheNghiep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxNgheNghiep.setMinimumSize(new java.awt.Dimension(256, 20));
-        cbxNgheNghiep.setPreferredSize(new java.awt.Dimension(270, 20));
+        cbxNgheNghiep.setMinimumSize(new java.awt.Dimension(280, 30));
+        cbxNgheNghiep.setPreferredSize(new java.awt.Dimension(280, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -357,10 +429,11 @@ public class EmployeeInfo extends javax.swing.JFrame {
 
         btnRank.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRank.setText("...");
-        btnRank.setMargin(new java.awt.Insets(1, 3, 1, 1));
+        btnRank.setMargin(new java.awt.Insets(1, -4, 1, -4));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnRank, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -373,8 +446,9 @@ public class EmployeeInfo extends javax.swing.JFrame {
         getContentPane().add(panelRight, gridBagConstraints);
 
         panelLeft.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 204, 255))); // NOI18N
-        panelLeft.setMinimumSize(new java.awt.Dimension(500, 325));
-        panelLeft.setPreferredSize(new java.awt.Dimension(480, 320));
+        panelLeft.setMinimumSize(new java.awt.Dimension(490, 340));
+        panelLeft.setOpaque(false);
+        panelLeft.setPreferredSize(new java.awt.Dimension(490, 340));
         panelLeft.setLayout(new java.awt.GridBagLayout());
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -469,8 +543,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelLeft.add(jLabel20, gridBagConstraints);
 
         txtCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtCMND.setMinimumSize(new java.awt.Dimension(160, 20));
-        txtCMND.setPreferredSize(new java.awt.Dimension(200, 20));
+        txtCMND.setMinimumSize(new java.awt.Dimension(160, 30));
+        txtCMND.setPreferredSize(new java.awt.Dimension(160, 30));
         txtCMND.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCMNDActionPerformed(evt);
@@ -485,19 +559,19 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelLeft.add(txtCMND, gridBagConstraints);
 
         txtNoiCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNoiCapCMND.setMinimumSize(new java.awt.Dimension(370, 20));
-        txtNoiCapCMND.setPreferredSize(new java.awt.Dimension(350, 20));
+        txtNoiCapCMND.setMinimumSize(new java.awt.Dimension(391, 30));
+        txtNoiCapCMND.setPreferredSize(new java.awt.Dimension(391, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(txtNoiCapCMND, gridBagConstraints);
 
         txtNgaycapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgaycapHC.setMinimumSize(new java.awt.Dimension(160, 20));
-        txtNgaycapHC.setPreferredSize(new java.awt.Dimension(150, 20));
+        txtNgaycapHC.setMinimumSize(new java.awt.Dimension(160, 30));
+        txtNgaycapHC.setPreferredSize(new java.awt.Dimension(160, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -506,8 +580,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelLeft.add(txtNgaycapHC, gridBagConstraints);
 
         txtSoHoChieu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtSoHoChieu.setMinimumSize(new java.awt.Dimension(160, 20));
-        txtSoHoChieu.setPreferredSize(new java.awt.Dimension(150, 20));
+        txtSoHoChieu.setMinimumSize(new java.awt.Dimension(160, 30));
+        txtSoHoChieu.setPreferredSize(new java.awt.Dimension(160, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -517,8 +591,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelLeft.add(txtSoHoChieu, gridBagConstraints);
 
         txtNoiCapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNoiCapHC.setMinimumSize(new java.awt.Dimension(370, 20));
-        txtNoiCapHC.setPreferredSize(new java.awt.Dimension(350, 20));
+        txtNoiCapHC.setMinimumSize(new java.awt.Dimension(391, 30));
+        txtNoiCapHC.setPreferredSize(new java.awt.Dimension(391, 30));
         txtNoiCapHC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNoiCapHCActionPerformed(evt);
@@ -533,63 +607,60 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelLeft.add(txtNoiCapHC, gridBagConstraints);
 
         cbxHonNhan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxHonNhan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxHonNhan.setMinimumSize(new java.awt.Dimension(345, 20));
-        cbxHonNhan.setPreferredSize(new java.awt.Dimension(320, 20));
+        cbxHonNhan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã kết hôn", "Độc thân" }));
+        cbxHonNhan.setSelectedIndex(-1);
+        cbxHonNhan.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxHonNhan.setPreferredSize(new java.awt.Dimension(335, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(cbxHonNhan, gridBagConstraints);
 
         cbxTonGiao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxTonGiao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxTonGiao.setMinimumSize(new java.awt.Dimension(345, 20));
-        cbxTonGiao.setPreferredSize(new java.awt.Dimension(200, 20));
+        cbxTonGiao.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxTonGiao.setPreferredSize(new java.awt.Dimension(335, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(cbxTonGiao, gridBagConstraints);
 
         cbxDanToc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxDanToc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxDanToc.setMinimumSize(new java.awt.Dimension(345, 20));
-        cbxDanToc.setPreferredSize(new java.awt.Dimension(200, 20));
+        cbxDanToc.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxDanToc.setPreferredSize(new java.awt.Dimension(335, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(cbxDanToc, gridBagConstraints);
 
         cbxQuocTich.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxQuocTich.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxQuocTich.setMinimumSize(new java.awt.Dimension(345, 20));
-        cbxQuocTich.setPreferredSize(new java.awt.Dimension(200, 20));
+        cbxQuocTich.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxQuocTich.setPreferredSize(new java.awt.Dimension(335, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(cbxQuocTich, gridBagConstraints);
 
         cbxGiaDinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxGiaDinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxGiaDinh.setMinimumSize(new java.awt.Dimension(345, 20));
-        cbxGiaDinh.setPreferredSize(new java.awt.Dimension(200, 20));
+        cbxGiaDinh.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxGiaDinh.setPreferredSize(new java.awt.Dimension(335, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(cbxGiaDinh, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -611,72 +682,67 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelLeft.add(jLabel3, gridBagConstraints);
 
         txtNgayHetHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgayHetHC.setMinimumSize(new java.awt.Dimension(100, 20));
-        txtNgayHetHC.setPreferredSize(new java.awt.Dimension(100, 20));
+        txtNgayHetHC.setMinimumSize(new java.awt.Dimension(100, 30));
+        txtNgayHetHC.setPreferredSize(new java.awt.Dimension(100, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(txtNgayHetHC, gridBagConstraints);
 
         txtNgayCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgayCapCMND.setMinimumSize(new java.awt.Dimension(100, 20));
-        txtNgayCapCMND.setPreferredSize(new java.awt.Dimension(100, 20));
+        txtNgayCapCMND.setMinimumSize(new java.awt.Dimension(102, 30));
+        txtNgayCapCMND.setPreferredSize(new java.awt.Dimension(102, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 6);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(txtNgayCapCMND, gridBagConstraints);
 
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton8.setText("...");
-        jButton8.setMargin(new java.awt.Insets(1, 3, 1, 1));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 6);
-        panelLeft.add(jButton8, gridBagConstraints);
-
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton7.setText("...");
-        jButton7.setMargin(new java.awt.Insets(1, 3, 1, 1));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-        panelLeft.add(jButton7, gridBagConstraints);
-
-        jButton11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton11.setText("...");
-        jButton11.setMargin(new java.awt.Insets(1, 3, 1, 1));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-        panelLeft.add(jButton11, gridBagConstraints);
-
-        jButton12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton12.setText("...");
-        jButton12.setMargin(new java.awt.Insets(1, 3, 1, 1));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 5);
-        panelLeft.add(jButton12, gridBagConstraints);
-
-        btnOptionHonNhan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnOptionHonNhan.setText("...");
-        btnOptionHonNhan.setMargin(new java.awt.Insets(1, 3, 1, 1));
+        jButton8.setMargin(new java.awt.Insets(1, -4, 1, -4));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 6);
-        panelLeft.add(btnOptionHonNhan, gridBagConstraints);
+        panelLeft.add(jButton8, gridBagConstraints);
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton7.setText("...");
+        jButton7.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton7, gridBagConstraints);
+
+        jButton11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton11.setText("...");
+        jButton11.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton11, gridBagConstraints);
+
+        jButton12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton12.setText("...");
+        jButton12.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton12, gridBagConstraints);
+
+        jButton9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton9.setText("...");
+        jButton9.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton9, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -684,14 +750,17 @@ public class EmployeeInfo extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.gridheight = 11;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 23, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 27, 0, 0);
         getContentPane().add(panelLeft, gridBagConstraints);
 
         panelTop.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        panelTop.setMinimumSize(new java.awt.Dimension(1030, 170));
+        panelTop.setPreferredSize(new java.awt.Dimension(1030, 170));
         panelTop.setLayout(new java.awt.GridBagLayout());
 
         txtMaNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtMaNV.setPreferredSize(new java.awt.Dimension(230, 20));
+        txtMaNV.setMinimumSize(new java.awt.Dimension(230, 30));
+        txtMaNV.setPreferredSize(new java.awt.Dimension(230, 30));
         txtMaNV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaNVActionPerformed(evt);
@@ -705,7 +774,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(txtMaNV, gridBagConstraints);
 
         txtTen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTen.setPreferredSize(new java.awt.Dimension(307, 20));
+        txtTen.setMinimumSize(new java.awt.Dimension(307, 30));
+        txtTen.setPreferredSize(new java.awt.Dimension(307, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
@@ -714,7 +784,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(txtTen, gridBagConstraints);
 
         txtHoDem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtHoDem.setPreferredSize(new java.awt.Dimension(230, 20));
+        txtHoDem.setMinimumSize(new java.awt.Dimension(230, 30));
+        txtHoDem.setPreferredSize(new java.awt.Dimension(230, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -723,7 +794,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(txtHoDem, gridBagConstraints);
 
         txtNoiSinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNoiSinh.setPreferredSize(new java.awt.Dimension(680, 20));
+        txtNoiSinh.setMinimumSize(new java.awt.Dimension(680, 30));
+        txtNoiSinh.setPreferredSize(new java.awt.Dimension(680, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -732,7 +804,9 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(txtNoiSinh, gridBagConstraints);
 
         txtHoTen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtHoTen.setPreferredSize(new java.awt.Dimension(230, 20));
+        txtHoTen.setMinimumSize(new java.awt.Dimension(230, 30));
+        txtHoTen.setPreferredSize(new java.awt.Dimension(230, 30));
+        txtHoTen.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -747,8 +821,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 5;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 55, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelTop.add(jLabel10, gridBagConstraints);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -758,8 +831,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 5;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 52, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelTop.add(jLabel11, gridBagConstraints);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -769,8 +841,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.ipadx = 5;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 56, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelTop.add(jLabel12, gridBagConstraints);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -780,8 +851,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 5;
         gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 66, 0, 0);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelTop.add(jLabel13, gridBagConstraints);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -832,15 +902,20 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(jLabel7, gridBagConstraints);
 
         cbxSex.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        cbxSex.setSelectedIndex(-1);
+        cbxSex.setMinimumSize(new java.awt.Dimension(75, 30));
+        cbxSex.setPreferredSize(new java.awt.Dimension(75, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelTop.add(cbxSex, gridBagConstraints);
 
         txtMaCC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtMaCC.setPreferredSize(new java.awt.Dimension(307, 20));
+        txtMaCC.setMinimumSize(new java.awt.Dimension(307, 30));
+        txtMaCC.setPreferredSize(new java.awt.Dimension(307, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -849,7 +924,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(txtMaCC, gridBagConstraints);
 
         txtNguyenQuan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNguyenQuan.setPreferredSize(new java.awt.Dimension(450, 20));
+        txtNguyenQuan.setMinimumSize(new java.awt.Dimension(450, 30));
+        txtNguyenQuan.setPreferredSize(new java.awt.Dimension(450, 30));
         txtNguyenQuan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNguyenQuanActionPerformed(evt);
@@ -863,7 +939,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(txtNguyenQuan, gridBagConstraints);
 
         txtNgaysinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgaysinh.setPreferredSize(new java.awt.Dimension(150, 20));
+        txtNgaysinh.setMinimumSize(new java.awt.Dimension(150, 30));
+        txtNgaysinh.setPreferredSize(new java.awt.Dimension(150, 30));
         txtNgaysinh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNgaysinhActionPerformed(evt);
@@ -876,13 +953,14 @@ public class EmployeeInfo extends javax.swing.JFrame {
         panelTop.add(txtNgaysinh, gridBagConstraints);
 
         panelImage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hình ảnh", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 204, 255))); // NOI18N
-        panelImage.setPreferredSize(new java.awt.Dimension(120, 150));
+        panelImage.setMinimumSize(new java.awt.Dimension(130, 170));
+        panelImage.setPreferredSize(new java.awt.Dimension(130, 170));
 
         javax.swing.GroupLayout panelImageLayout = new javax.swing.GroupLayout(panelImage);
         panelImage.setLayout(panelImageLayout);
         panelImageLayout.setHorizontalGroup(
             panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 108, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panelImageLayout.setVerticalGroup(
             panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -898,8 +976,13 @@ public class EmployeeInfo extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 29, 0, 4);
         panelTop.add(panelImage, gridBagConstraints);
 
-        cbxNguyenQuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxNguyenQuan.setPreferredSize(new java.awt.Dimension(220, 20));
+        cbxNguyenQuan.setMinimumSize(new java.awt.Dimension(220, 30));
+        cbxNguyenQuan.setPreferredSize(new java.awt.Dimension(220, 30));
+        cbxNguyenQuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxNguyenQuanActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
@@ -977,7 +1060,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        stateButton(true);
+        if(validateInput())
+            dispose();
     }//GEN-LAST:event_btSaveActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
@@ -1020,9 +1104,32 @@ public class EmployeeInfo extends javax.swing.JFrame {
         list = session.createQuery("FROM Employee").list();
         System.out.println(list.size());
         for(int i = 0; i<list.size(); i++){
-            System.out.println(list.get(i).getCmndNgaycap());
+            System.out.println(list.get(i).toString());
         }
     }//GEN-LAST:event_btPrintActionPerformed
+
+    private void cbxNguyenQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNguyenQuanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxNguyenQuanActionPerformed
+
+    private void cbxUniversityItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxUniversityItemStateChanged
+        // TODO add your handling code here:
+        Object selectedItem = cbxUniversity.getSelectedItem();
+        TruongDaotao t = (TruongDaotao) selectedItem;
+        
+        cbxChuyenNganh.removeAllItems();
+        cbxKhoaDaoTao.removeAllItems();
+        setContentCbxKhoaDaotao(t.getIdDaotao());
+    }//GEN-LAST:event_cbxUniversityItemStateChanged
+
+    private void cbxKhoaDaoTaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxKhoaDaoTaoItemStateChanged
+        // TODO add your handling code here:
+        Object selectedItem =  cbxKhoaDaoTao.getSelectedItem();
+        KhoaDaotao k = (KhoaDaotao) selectedItem;
+        cbxChuyenNganh.removeAllItems();
+        if(k != null)
+            setContentCbxChuyenNganh(k.getMaKhoa());
+    }//GEN-LAST:event_cbxKhoaDaoTaoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1070,27 +1177,27 @@ public class EmployeeInfo extends javax.swing.JFrame {
     private javax.swing.JButton btnFa;
     private javax.swing.JButton btnJob;
     private javax.swing.JButton btnMajor;
-    private javax.swing.JButton btnOptionHonNhan;
     private javax.swing.JButton btnRank;
     private javax.swing.JButton btnTrinhdo;
     private javax.swing.JButton btnUniversity;
-    private javax.swing.JComboBox<String> cbxChuyenNganh;
-    private javax.swing.JComboBox<String> cbxDanToc;
-    private javax.swing.JComboBox<String> cbxGiaDinh;
+    private javax.swing.JComboBox<Chuyennganh> cbxChuyenNganh;
+    private javax.swing.JComboBox<Dantoc> cbxDanToc;
+    private javax.swing.JComboBox<ThanhphanGiadinh> cbxGiaDinh;
     private javax.swing.JComboBox<String> cbxHonNhan;
-    private javax.swing.JComboBox<String> cbxKhoaDaoTao;
-    private javax.swing.JComboBox<String> cbxNgheNghiep;
-    private javax.swing.JComboBox<String> cbxNguyenQuan;
-    private javax.swing.JComboBox<String> cbxQuocTich;
+    private javax.swing.JComboBox<KhoaDaotao> cbxKhoaDaoTao;
+    private javax.swing.JComboBox<Nghenghiep> cbxNgheNghiep;
+    private javax.swing.JComboBox<Tinhthanh> cbxNguyenQuan;
+    private javax.swing.JComboBox<Quocgia> cbxQuocTich;
     private javax.swing.JComboBox<String> cbxSex;
-    private javax.swing.JComboBox<String> cbxTonGiao;
-    private javax.swing.JComboBox<String> cbxTrinhDoDaoTao;
-    private javax.swing.JComboBox<String> cbxUniversity;
-    private javax.swing.JComboBox<String> cbxXepLoai;
+    private javax.swing.JComboBox<Tongiao> cbxTonGiao;
+    private javax.swing.JComboBox<TrinhdoDaotao> cbxTrinhDoDaoTao;
+    private javax.swing.JComboBox<TruongDaotao> cbxUniversity;
+    private javax.swing.JComboBox<Xeploai> cbxXepLoai;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1143,4 +1250,312 @@ public class EmployeeInfo extends javax.swing.JFrame {
     private javax.swing.JTextField txtTen;
     private javax.swing.JTextField txtTrinhDoVanHoa;
     // End of variables declaration//GEN-END:variables
+
+        public void setContentCbxQuocTich(){
+        QuocgiaBLL qbll = new QuocgiaBLL();
+        List<Quocgia> list = qbll.getAll();
+        for(Quocgia q : list){
+            cbxQuocTich.addItem(q);
+        }
+    }
+    public void setContentCbxDantoc(){
+        DantocBLL qbll = new DantocBLL();
+        List<Dantoc> list = qbll.getAll();
+        for(Dantoc q : list){
+            cbxDanToc.addItem(q);
+        }
+    }
+    private void setContentCbxTonGiao() {
+
+        TongiaoBLL bll = new TongiaoBLL();
+        List<Tongiao> list = bll.getAll();
+        for(Tongiao t : list){
+            cbxTonGiao.addItem(t);
+        }
+    }
+
+    private void setContentCbxChuyenNganh(int maKhoa) {
+        ChuyennganhBLL bll = new ChuyennganhBLL();
+        List<Chuyennganh> list = bll.findByKhoa(maKhoa);
+        if(list != null){
+            for(Chuyennganh c : list){
+            cbxChuyenNganh.addItem(c);
+            }
+        }else{
+            cbxChuyenNganh.removeAllItems();
+        }
+        
+    }
+
+    private void setContentCbxKhoaDaotao(int id) {
+        KhoaDaotaoBLL bll = new KhoaDaotaoBLL();
+        List<KhoaDaotao> list = bll.findByUniversity(id);
+        for(KhoaDaotao k : list){
+            cbxKhoaDaoTao.addItem(k);
+        }
+    }
+    private void setContentCbxKhoaDaotao(TruongDaotao id) {
+        KhoaDaotaoBLL bll = new KhoaDaotaoBLL();
+        List<KhoaDaotao> list = bll.findByUniversity(id);
+        for(KhoaDaotao k : list){
+            cbxKhoaDaoTao.addItem(k);
+        }
+    }
+
+    private void setContentCbxNgheNghiep() {
+        NghenghiepBLL bll = new NghenghiepBLL();
+        List<Nghenghiep> list = bll.getAll();
+        for(Nghenghiep n : list){
+            cbxNgheNghiep.addItem(n);
+        }
+    }
+
+    private void setContentCbxThanhphanGiadinh() {
+        ThanhphanGiadinhBLL bll = new ThanhphanGiadinhBLL();
+        List<ThanhphanGiadinh> list = bll.getALl();
+        for(ThanhphanGiadinh t : list){
+            cbxGiaDinh.addItem(t);
+        }
+    }
+
+    private void setContentCbxNguyenQuan() {
+        TinhthanhBLL bll = new TinhthanhBLL();
+        List<Tinhthanh> list = bll.getAll();
+        for(Tinhthanh t : list){
+            cbxNguyenQuan.addItem(t);
+        }
+    }
+
+    private void setContentCbxTrinhdoDaotao() {
+//        TrinhdoDaotaob
+    }
+
+    private void setContentCbxNoiDaotao() {
+        TruongDaotaoBLL bll = new TruongDaotaoBLL();
+        List<TruongDaotao> list = bll.getAll();
+        for(TruongDaotao t : list){
+            cbxUniversity.addItem(t);
+        }
+    }
+
+    private void setContentCbxXeploai() {
+        XeploaiBLL bll = new XeploaiBLL();
+        List<Xeploai> list = bll.getAll();
+        for(Xeploai x : list){
+            cbxXepLoai.addItem(x);
+        }
+    }
+    
+    private Date frmDate(String date) throws ParseException{
+        if(date == null)
+            return null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	java.util.Date dateUtil;
+        dateUtil = sdf.parse(date);
+        return dateUtil;
+    }
+    
+    private Tinhthanh getNguyenquanByCombobox() {
+        if(cbxNguyenQuan.getSelectedIndex() == -1){
+            return null;
+        }
+        return (Tinhthanh) cbxNguyenQuan.getSelectedItem();
+//        return t;
+    }
+
+    private ThanhphanGiadinh getTpGdByCombobox() {
+        if(cbxGiaDinh.getSelectedIndex() == -1)
+            return null;
+        return (ThanhphanGiadinh) cbxGiaDinh.getSelectedItem();
+    }
+
+    private Dantoc getDantocByCombobox() {
+        if(cbxDanToc.getSelectedIndex() == -1)
+            return null;
+        return (Dantoc) cbxDanToc.getSelectedItem();
+    }
+
+    private Tongiao getTongiaoByCombobox() {
+        if(cbxTonGiao.getSelectedIndex() == -1)
+            return null;
+        return (Tongiao) cbxTonGiao.getSelectedItem();
+    }
+
+    private Quocgia getQuoctichByCombobox() {
+        if(cbxQuocTich.getSelectedIndex() == -1)
+            return null;
+        return (Quocgia) cbxQuocTich.getSelectedItem();
+    }
+
+    private Chuyennganh getChuyennganhByCombobox() {
+        if(cbxChuyenNganh.getSelectedIndex() == -1)
+            return null;
+        return (Chuyennganh) cbxChuyenNganh.getSelectedItem();
+    }
+
+    private Xeploai getXeploaiByCombobox() {
+        if(cbxXepLoai.getSelectedIndex() == -1)
+            return null;
+        return (Xeploai) cbxXepLoai.getSelectedItem();
+    }
+
+    private Nghenghiep getNghenghiepByCombobox() {
+        if(cbxNgheNghiep.getSelectedIndex() == -1)
+            return null;
+        return (Nghenghiep) cbxNgheNghiep.getSelectedItem();
+    }
+    
+    private boolean validateInput(){
+        try {
+            String maNV = txtMaNV.getText();
+            String maCC = txtMaCC.getText();
+            String tenHoDem = txtHoDem.getText();
+            String ten = txtTen.getText();
+            String noiSinh = txtNoiSinh.getText();
+            String noiCapCMND = txtNoiCapCMND.getText();
+            String soHoChieu = txtSoHoChieu.getText();
+            String noiCapHC = txtNoiCapHC.getText();
+            String cmnd = txtCMND.getText();
+            String trinhDoVH = txtTrinhDoVanHoa.getText();
+            int namTotNghiep = (Integer) spnNamTotNghiep.getValue();
+            
+            String ngaysinh = (txtNgaysinh.getText());
+            String ngayCapHC = (txtNgaycapHC.getText());
+            String hetHanHC = (txtNgayHetHC.getText());
+            String ngayCapCmnd = (txtNgayCapCMND.getText());
+            
+            /////////////////////////////////////////////
+            if(e == null){
+                e = new Employee();
+            }
+            
+            if(maNV.equals("")){
+                JOptionPane.showMessageDialog(this, "Nhap ma NV!");
+                txtMaNV.requestFocus();
+                return false;
+            }else if(maCC.equals("")){
+                JOptionPane.showMessageDialog(this, "Nhap ma CC!");
+                txtMaCC.requestFocus();
+                return false;
+            }else if(tenHoDem.equals("")){
+                JOptionPane.showMessageDialog(this, "Nhap Ho dem!");
+                txtHoDem.requestFocus();
+                return false;
+            }else if(noiSinh.equals("")){
+                JOptionPane.showMessageDialog(this, "Nhap noi sinh!");
+                txtNoiSinh.requestFocus();
+                return false;
+            }else if(trinhDoVH.equals("")){
+                JOptionPane.showMessageDialog(this, "Nhap Trinh do VH!");
+                txtTrinhDoVanHoa.requestFocus();
+                return false;
+            }else if(cmnd.equals("")){
+                if(noiCapCMND.equals("") && ngayCapCmnd.equals("")){
+                    JOptionPane.showMessageDialog(this, "Khong co CMND!");
+//                    e.setCmnd(null);
+//                    e.setCmndNgaycap(null);
+//                    e.setNoicapCmnd(null);
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this, "Nhap CMND, ngay cap, noi cap!");
+                    txtCMND.requestFocus();
+                    return false;
+                }
+            }else if(!cmnd.equals("")){
+                if(noiCapCMND.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap noi cap CMND!");
+                    txtNoiCapCMND.requestFocus();
+                    return false;
+                }else
+                if(ngayCapCmnd.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap ngay cap CMND!");
+                    txtNgayCapCMND.requestFocus();
+                    return false;
+                }else{
+                    e.setCmnd(cmnd);
+                    e.setCmndNgaycap(frmDate(ngayCapCmnd));
+                    e.setNoicapCmnd(noiCapCMND);
+                }
+            }else if(soHoChieu.equals("")){
+                if(noiCapHC.equals("") && ngayCapHC.equals("") && hetHanHC.equals("")){
+                    JOptionPane.showMessageDialog(this, "Khong co Ho chieu!");
+//                    e.setSohochieu(null);
+//                    e.setNgaycapHochieu(null);
+//                    e.setNoicapHochieu(null);
+//                    e.setHethanHochieu(null);
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this, "Nhap Ho chieu, ngay cap, noi cap!");
+                    txtSoHoChieu.requestFocus();
+                    return false;
+                }
+            }else if(!soHoChieu.equals("")){
+                if(noiCapHC.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap noi cap Ho chieu!");
+                    txtNoiCapHC.requestFocus();
+                    return false;
+                }else
+                if( ngayCapHC.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap ngay cap Ho chieu!");
+                    txtNgaycapHC.requestFocus();
+                    return false;
+                }else
+                if( hetHanHC.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap ngay het han Ho chieu!");
+                    txtNgayHetHC.requestFocus();
+                    return false;
+                }else{
+                    e.setSohochieu(soHoChieu);
+                    e.setNgaycapHochieu(frmDate(ngayCapHC));
+                    e.setNoicapHochieu(noiCapHC);
+                    e.setHethanHochieu(frmDate(hetHanHC));
+                }
+            }
+            
+                //////////////////////////////////
+                e.setMaNv(maNV);
+                e.setMaChamcong(maCC);
+                e.setTenHoDem(tenHoDem);
+                e.setTen(ten);
+                e.setNoisinh(noiSinh);
+    //            e.setNoicapCmnd(noiCapCMND);
+    //            e.setSohochieu(soHoChieu);  
+    //            e.setNoicapHochieu(noiCapHC);
+    //            e.setCmnd(cmnd);
+                e.setTrinhdovanhoa(trinhDoVH);
+                e.setNamtotnghiep(namTotNghiep);
+
+                e.setNgaySinh(frmDate(ngaysinh));
+    //            e.setNgaycapHochieu(frmDate(ngayCapHC));
+    //            e.setHethanHochieu(frmDate(hetHanHC));
+    //            e.setCmndNgaycap(frmDate(ngayCapCmnd));
+
+                if(cbxSex.getSelectedIndex() == -1){
+                    e.setSex(null);
+                }else{
+                    e.setSex(cbxSex.getSelectedIndex()==0); // 0 male, 1 female
+                }
+
+                if(cbxHonNhan.getSelectedIndex() == -1){
+                    e.setTinhtrangHonnhan(null);
+                }else{
+                    e.setTinhtrangHonnhan(cbxHonNhan.getSelectedIndex() == 0);
+                }
+
+                e.setNguyenquan(getNguyenquanByCombobox());
+                e.setIdTp(getTpGdByCombobox());
+                e.setMaDantoc(getDantocByCombobox());
+                e.setMaTongiao(getTongiaoByCombobox());
+                e.setQuoctich(getQuoctichByCombobox());
+                e.setChuyennganh(getChuyennganhByCombobox());
+                e.setMaLoai(getXeploaiByCombobox());
+                e.setMaNghe(getNghenghiepByCombobox());
+
+                return true;
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(EmployeeInfo.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 }

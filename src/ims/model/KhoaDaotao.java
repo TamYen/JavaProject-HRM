@@ -108,7 +108,7 @@ public class KhoaDaotao implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.KhoaDaotao[ maKhoa=" + maKhoa + " ]";
+        return tenKhoa;
     }
     
 }

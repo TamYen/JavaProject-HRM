@@ -95,7 +95,7 @@ public class Dantoc implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Dantoc[ maDantoc=" + maDantoc + " ]";
+        return dantoc;
     }
     
 }

@@ -6,19 +6,36 @@
 
 package ims.gui;
 
+import ims.bll.EmployeeBLL;
+import ims.model.Employee;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.SessionFactory;
 
 /**
  *
  * @author NAT
  */
 public class EmployeeList extends javax.swing.JFrame {
+    
+    List<Employee> listEmp = new ArrayList<Employee>();
+    EmployeeBLL employeeBLL;
+    private SessionFactory factory;
 
     /** Creates new form EmployeeList */
     public EmployeeList() {
         initComponents();
         setInfoDialog();
+        employeeBLL = new EmployeeBLL();
+        formWindowOpened();
+        
     }
     public  void setInfoDialog() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,7 +64,7 @@ public class EmployeeList extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JToolBar.Separator();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbEmp = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -95,21 +112,24 @@ public class EmployeeList extends javax.swing.JFrame {
 
         getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 25));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbEmp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Mã ", "Họ", "Tên", "Ngày sinh", "Nơi sinh"
+                "Mã NV", "Họ", "Tên", "Mã chấm công", "Giới tính", "Ngày sinh", "Nơi sinh", "Nguyên quán"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jScrollPane1.setViewportView(tbEmp);
+        if (tbEmp.getColumnModel().getColumnCount() > 0) {
+            tbEmp.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tbEmp.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tbEmp.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tbEmp.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tbEmp.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tbEmp.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tbEmp.getColumnModel().getColumn(6).setPreferredWidth(150);
+            tbEmp.getColumnModel().getColumn(7).setPreferredWidth(150);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 830, 450));
@@ -119,7 +139,29 @@ public class EmployeeList extends javax.swing.JFrame {
 
     private void btNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNewActionPerformed
         EmployeeInfo emGui= new EmployeeInfo();
+        emGui.setTitle("Thêm nhân viên");
         emGui.setVisible(true);
+        
+        Employee newEmployee = emGui.getEmployee();
+
+        if (newEmployee != null) {
+            System.out.println(newEmployee);
+            try {
+                employeeBLL.save(newEmployee);
+                listEmp.add(newEmployee);
+                
+                DefaultTableModel model = (DefaultTableModel) tbEmp.getModel();
+                int newRow = tbEmp.getRowCount();
+                model.addRow(new Object[0]);
+                updateTableEmployee(newEmployee, newRow);
+                
+            } catch (Exception ex) {
+                String message = "Could not save new employee. Error:\n" + ex.getMessage();
+                JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        }
     }//GEN-LAST:event_btNewActionPerformed
 
     /**
@@ -157,6 +199,22 @@ public class EmployeeList extends javax.swing.JFrame {
         });
     }
 
+    private void formWindowOpened(){
+        try {
+            listEmp = employeeBLL.getAll();
+            DefaultTableModel model = (DefaultTableModel) tbEmp.getModel();
+            int row = 0;
+            for (Iterator iterator = listEmp.iterator(); iterator.hasNext();) {
+                Employee emp = (Employee) iterator.next();
+                model.addRow(new Object[0]);
+                updateTableEmployee(emp, row);
+                row++;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btNew;
     private javax.swing.JButton jButton2;
@@ -168,8 +226,21 @@ public class EmployeeList extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable tbEmp;
     // End of variables declaration//GEN-END:variables
+
+    public void updateTableEmployee(Employee emp, int row) {
+
+        DefaultTableModel model = (DefaultTableModel) tbEmp.getModel();
+        model.setValueAt(emp.getMaNv(), row, 0);
+        model.setValueAt(emp.getTenHoDem(), row, 1);
+        model.setValueAt(emp.getTen(), row, 2);
+        model.setValueAt(emp.getMaChamcong(), row, 3);
+        model.setValueAt((emp.getSex()==true?"Nam":"Nữ"), row, 4);
+        model.setValueAt(emp.getNgaySinh(), row, 5);
+        model.setValueAt(emp.getNoisinh(), row, 6);
+        model.setValueAt(emp.getNguyenquan().getTentinhthanh(), row, 7);
+    }
 
 }

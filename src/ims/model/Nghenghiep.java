@@ -95,7 +95,7 @@ public class Nghenghiep implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Nghenghiep[ maNghe=" + maNghe + " ]";
+        return tennghe;
     }
     
 }

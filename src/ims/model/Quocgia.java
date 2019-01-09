@@ -95,7 +95,7 @@ public class Quocgia implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Quocgia[ maQuocgia=" + maQuocgia + " ]";
+        return tenQuocgia;
     }
     
 }

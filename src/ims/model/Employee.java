@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
     , @NamedQuery(name = "Employee.findByMaNv", query = "SELECT e FROM Employee e WHERE e.maNv = :maNv")
+    , @NamedQuery(name = "Employee.findByNoicapCmnd", query = "SELECT e FROM Employee e WHERE e.noicapCmnd = :noicapCmnd")
+    , @NamedQuery(name = "Employee.findByNoicapHochieu", query = "SELECT e FROM Employee e WHERE e.noicapHochieu = :noicapHochieu")
+    , @NamedQuery(name = "Employee.findByNoisinh", query = "SELECT e FROM Employee e WHERE e.noisinh = :noisinh")
     , @NamedQuery(name = "Employee.findByMaChamcong", query = "SELECT e FROM Employee e WHERE e.maChamcong = :maChamcong")
     , @NamedQuery(name = "Employee.findByTenHoDem", query = "SELECT e FROM Employee e WHERE e.tenHoDem = :tenHoDem")
     , @NamedQuery(name = "Employee.findByTen", query = "SELECT e FROM Employee e WHERE e.ten = :ten")
@@ -51,6 +54,12 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @Column(name = "ma_nv")
     private String maNv;
+    @Column(name = "noicap_cmnd")
+    private String noicapCmnd;
+    @Column(name = "noicap_hochieu")
+    private String noicapHochieu;
+    @Column(name = "noisinh")
+    private String noisinh;
     @Basic(optional = false)
     @Column(name = "ma_chamcong")
     private String maChamcong;
@@ -102,15 +111,6 @@ public class Employee implements Serializable {
     @JoinColumn(name = "nguyenquan", referencedColumnName = "ma_tinhthanh")
     @ManyToOne
     private Tinhthanh nguyenquan;
-    @JoinColumn(name = "noicap_cmnd", referencedColumnName = "ma_tinhthanh")
-    @ManyToOne
-    private Tinhthanh noicapCmnd;
-    @JoinColumn(name = "noicap_hochieu", referencedColumnName = "ma_tinhthanh")
-    @ManyToOne
-    private Tinhthanh noicapHochieu;
-    @JoinColumn(name = "noisinh", referencedColumnName = "ma_tinhthanh")
-    @ManyToOne
-    private Tinhthanh noisinh;
     @JoinColumn(name = "ma_tongiao", referencedColumnName = "ma_tongiao")
     @ManyToOne
     private Tongiao maTongiao;
@@ -136,6 +136,30 @@ public class Employee implements Serializable {
 
     public void setMaNv(String maNv) {
         this.maNv = maNv;
+    }
+
+    public String getNoicapCmnd() {
+        return noicapCmnd;
+    }
+
+    public void setNoicapCmnd(String noicapCmnd) {
+        this.noicapCmnd = noicapCmnd;
+    }
+
+    public String getNoicapHochieu() {
+        return noicapHochieu;
+    }
+
+    public void setNoicapHochieu(String noicapHochieu) {
+        this.noicapHochieu = noicapHochieu;
+    }
+
+    public String getNoisinh() {
+        return noisinh;
+    }
+
+    public void setNoisinh(String noisinh) {
+        this.noisinh = noisinh;
     }
 
     public String getMaChamcong() {
@@ -298,30 +322,6 @@ public class Employee implements Serializable {
         this.nguyenquan = nguyenquan;
     }
 
-    public Tinhthanh getNoicapCmnd() {
-        return noicapCmnd;
-    }
-
-    public void setNoicapCmnd(Tinhthanh noicapCmnd) {
-        this.noicapCmnd = noicapCmnd;
-    }
-
-    public Tinhthanh getNoicapHochieu() {
-        return noicapHochieu;
-    }
-
-    public void setNoicapHochieu(Tinhthanh noicapHochieu) {
-        this.noicapHochieu = noicapHochieu;
-    }
-
-    public Tinhthanh getNoisinh() {
-        return noisinh;
-    }
-
-    public void setNoisinh(Tinhthanh noisinh) {
-        this.noisinh = noisinh;
-    }
-
     public Tongiao getMaTongiao() {
         return maTongiao;
     }
@@ -360,7 +360,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Employee[ maNv=" + maNv + " ]";
+        return tenHoDem + " " + ten;
     }
     
 }

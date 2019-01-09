@@ -40,12 +40,6 @@ public class Tinhthanh implements Serializable {
     private String tentinhthanh;
     @OneToMany(mappedBy = "nguyenquan")
     private List<Employee> employeeList;
-    @OneToMany(mappedBy = "noicapCmnd")
-    private List<Employee> employeeList1;
-    @OneToMany(mappedBy = "noicapHochieu")
-    private List<Employee> employeeList2;
-    @OneToMany(mappedBy = "noisinh")
-    private List<Employee> employeeList3;
 
     public Tinhthanh() {
     }
@@ -79,33 +73,6 @@ public class Tinhthanh implements Serializable {
         this.employeeList = employeeList;
     }
 
-    @XmlTransient
-    public List<Employee> getEmployeeList1() {
-        return employeeList1;
-    }
-
-    public void setEmployeeList1(List<Employee> employeeList1) {
-        this.employeeList1 = employeeList1;
-    }
-
-    @XmlTransient
-    public List<Employee> getEmployeeList2() {
-        return employeeList2;
-    }
-
-    public void setEmployeeList2(List<Employee> employeeList2) {
-        this.employeeList2 = employeeList2;
-    }
-
-    @XmlTransient
-    public List<Employee> getEmployeeList3() {
-        return employeeList3;
-    }
-
-    public void setEmployeeList3(List<Employee> employeeList3) {
-        this.employeeList3 = employeeList3;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -128,7 +95,7 @@ public class Tinhthanh implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Tinhthanh[ maTinhthanh=" + maTinhthanh + " ]";
+        return tentinhthanh;
     }
     
 }

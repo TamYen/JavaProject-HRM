@@ -95,7 +95,7 @@ public class ThanhphanGiadinh implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.ThanhphanGiadinh[ idTp=" + idTp + " ]";
+        return tenThanhphan;
     }
     
 }

@@ -95,7 +95,7 @@ public class Xeploai implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Xeploai[ maLoai=" + maLoai + " ]";
+        return tenloai;
     }
     
 }

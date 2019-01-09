@@ -95,7 +95,7 @@ public class TrinhdoDaotao implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.TrinhdoDaotao[ maTrinhdo=" + maTrinhdo + " ]";
+        return trinhdo;
     }
     
 }

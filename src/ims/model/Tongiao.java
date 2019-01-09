@@ -95,7 +95,7 @@ public class Tongiao implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Tongiao[ maTongiao=" + maTongiao + " ]";
+        return tenTongiao;
     }
     
 }

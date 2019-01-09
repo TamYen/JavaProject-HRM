@@ -119,7 +119,7 @@ public class Chuyennganh implements Serializable {
 
     @Override
     public String toString() {
-        return "ims.model.Chuyennganh[ maNganh=" + maNganh + " ]";
+        return tenNganh;
     }
     
 }
