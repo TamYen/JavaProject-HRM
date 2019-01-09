@@ -7,10 +7,15 @@
 package ims.gui;
 
 import ims.bll.EmployeeBLL;
+import ims.bll.FormatDate;
 import ims.model.Employee;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,6 +33,7 @@ public class EmployeeList extends javax.swing.JFrame {
     List<Employee> listEmp = new ArrayList<Employee>();
     EmployeeBLL employeeBLL;
     private SessionFactory factory;
+    Employee empForEdit;
 
     /** Creates new form EmployeeList */
     public EmployeeList() {
@@ -56,13 +62,13 @@ public class EmployeeList extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         btNew = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton2 = new javax.swing.JButton();
+        btnEditEmp = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton3 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
-        jButton4 = new javax.swing.JButton();
+        btnShow = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
-        jButton5 = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbEmp = new javax.swing.JTable();
 
@@ -83,32 +89,42 @@ public class EmployeeList extends javax.swing.JFrame {
         jToolBar1.add(btNew);
         jToolBar1.add(jSeparator1);
 
-        jButton2.setText("Sửa");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        btnEditEmp.setText("Sửa");
+        btnEditEmp.setFocusable(false);
+        btnEditEmp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEditEmp.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEditEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditEmpActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnEditEmp);
         jToolBar1.add(jSeparator2);
 
-        jButton3.setText("Xóa");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        btnDelete.setText("Xóa");
+        btnDelete.setFocusable(false);
+        btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnDelete);
         jToolBar1.add(jSeparator3);
 
-        jButton4.setText("In");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        btnShow.setText("In");
+        btnShow.setFocusable(false);
+        btnShow.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnShow.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnShow);
         jToolBar1.add(jSeparator4);
 
-        jButton5.setText("Thoát");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
+        btnExit.setText("Thoát");
+        btnExit.setFocusable(false);
+        btnExit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnExit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnExit);
 
         getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 25));
 
@@ -145,7 +161,7 @@ public class EmployeeList extends javax.swing.JFrame {
         Employee newEmployee = emGui.getEmployee();
 
         if (newEmployee != null) {
-//            System.out.println(newEmployee.getChuyennganh().getMaTrinhdo().getTrinhdo());
+            System.out.println(newEmployee.getChuyennganh().getMaTrinhdo().getTrinhdo());
             try {
                 employeeBLL.save(newEmployee);
                 listEmp.add(newEmployee);
@@ -163,6 +179,36 @@ public class EmployeeList extends javax.swing.JFrame {
             System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         }
     }//GEN-LAST:event_btNewActionPerformed
+
+    private void btnEditEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEmpActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tbEmp.getSelectedRow();
+        EmployeeInfo emGui = new EmployeeInfo(this);
+        if(selectedRow >= 0){
+            empForEdit = listEmp.get(selectedRow);
+            emGui.setEmployee(empForEdit);
+            emGui.setContentToEdit();
+            emGui.setVisible(true);
+        }
+        
+        Employee editedEmployee = emGui.getEmployee();
+
+            
+	if (editedEmployee != null) {
+//            try {
+                employeeBLL.update(editedEmployee);		
+                updateTableEmployee(editedEmployee,selectedRow);                                
+//            } catch (Exception ex) {
+//                String message = "Could not update Employee. Error:\n" + ex.getMessage();
+//                JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);			
+//            }				
+        }
+    }//GEN-LAST:event_btnEditEmpActionPerformed
+
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        // TODO add your handling code here:
+        formWindowOpened();
+    }//GEN-LAST:event_btnShowActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,10 +263,10 @@ public class EmployeeList extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btNew;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEditEmp;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnShow;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -232,13 +278,15 @@ public class EmployeeList extends javax.swing.JFrame {
 
     public void updateTableEmployee(Employee emp, int row) {
 
+//        Format formatter = new SimpleDateFormat("dd-MM-yyyy");
+//        String s = formatter.format(emp.getNgaySinh().toString());
         DefaultTableModel model = (DefaultTableModel) tbEmp.getModel();
         model.setValueAt(emp.getMaNv(), row, 0);
         model.setValueAt(emp.getTenHoDem(), row, 1);
         model.setValueAt(emp.getTen(), row, 2);
         model.setValueAt(emp.getMaChamcong(), row, 3);
         model.setValueAt((emp.getSex()==true?"Nam":"Nữ"), row, 4);
-        model.setValueAt(emp.getNgaySinh(), row, 5);
+        model.setValueAt((emp.getNgaySinh() == null? null :emp.getNgaySinh().toString()), row, 5);
         model.setValueAt(emp.getNoisinh(), row, 6);
         model.setValueAt(emp.getNguyenquan().getTentinhthanh(), row, 7);
     }

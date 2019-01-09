@@ -28,8 +28,12 @@ public class EmployeeBLL {
         
     }
     
-    public void update(Employee e) throws Exception{
+    public void update(Employee e){
+        try {
             employeeDAL.update(e);
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeBLL.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public List<Employee> getAll() throws Exception{

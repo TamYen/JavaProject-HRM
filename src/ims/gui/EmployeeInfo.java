@@ -14,6 +14,7 @@ import ims.bll.QuocgiaBLL;
 import ims.bll.ThanhphanGiadinhBLL;
 import ims.bll.TinhthanhBLL;
 import ims.bll.TongiaoBLL;
+import ims.bll.TrinhdoDaotaoBLL;
 import ims.bll.TruongDaotaoBLL;
 import ims.bll.XeploaiBLL;
 import ims.model.Chuyennganh;
@@ -58,7 +59,58 @@ public class EmployeeInfo extends JDialog {
     }
 
     public void setEmployee(Employee employee) {
+        
         this.e = employee;
+        
+    }
+    
+    public void setContentToEdit(){
+        setTitle("Sua nhan vien");
+        stateButton(true);
+        txtMaNV.setText(e.getMaNv());
+        txtMaCC.setText(e.getMaChamcong());
+        txtHoDem.setText(e.getTenHoDem());
+        txtTen.setText(e.getTen());
+        txtHoTen.setText(e.getTenHoDem()+" "+e.getTen());
+        txtNoiCapCMND.setText(e.getNoicapCmnd());
+        txtSoHoChieu.setText(e.getSohochieu());
+        txtNoiSinh.setText(e.getNoisinh());
+        txtNguyenQuan.setText(e.getNguyenquan().getTentinhthanh());
+        cbxNguyenQuan.setSelectedItem(e.getNguyenquan());
+        txtCMND.setText(e.getCmnd());
+        ////////////////////
+        if(e.getCmndNgaycap() != null)
+            txtNgayCapCMND.setText(e.getCmndNgaycap().toString());
+        if(e.getNgaySinh() != null)
+            txtNgaysinh.setText(e.getNgaySinh().toString());
+        if(e.getNgaycapHochieu() != null)
+            txtNgaycapHC.setText(e.getNgaycapHochieu().toString());
+        if(e.getHethanHochieu() != null)
+            txtNgayHetHC.setText(e.getHethanHochieu().toString());
+        txtNoiCapHC.setText(e.getNoicapHochieu());
+        /////////////////
+        if(e.getTinhtrangHonnhan() == null){
+            cbxHonNhan.setSelectedIndex(-1);
+        }else if(e.getTinhtrangHonnhan() == false){
+            cbxHonNhan.setSelectedIndex(1);
+        }else cbxHonNhan.setSelectedIndex(0);
+        
+        if(e.getSex() == false){
+            cbxSex.setSelectedItem(1);
+        }else cbxSex.setSelectedItem(0);
+        
+        cbxGiaDinh.setSelectedItem(e.getIdTp());
+        cbxDanToc.setSelectedItem(e.getMaDantoc());
+        cbxTonGiao.setSelectedItem(e.getMaTongiao());
+        cbxQuocTich.setSelectedItem(e.getQuoctich());
+        txtTrinhDoVanHoa.setText(e.getTrinhdovanhoa());
+        cbxTrinhDoDaoTao.setSelectedItem(e.getChuyennganh().getMaTrinhdo());
+        cbxUniversity.setSelectedItem(e.getChuyennganh().getMaKhoa().getIdDaotao());
+        cbxKhoaDaoTao.setSelectedItem(e.getChuyennganh().getMaKhoa());
+        cbxChuyenNganh.setSelectedItem(e.getChuyennganh());
+        spnNamTotNghiep.setValue(e.getNamtotnghiep());
+        cbxXepLoai.setSelectedItem(e.getMaLoai());
+        cbxNgheNghiep.setSelectedItem(e.getMaNghe());
     }
     
     public EmployeeInfo(Frame owner) {
@@ -92,7 +144,7 @@ public class EmployeeInfo extends JDialog {
         setContentCbxNgheNghiep();
         setContentCbxThanhphanGiadinh();
         setContentCbxNguyenQuan();
-        setContentCbxTrinhdoDaotao();
+//        setContentCbxTrinhdoDaotao();
         setContentCbxNoiDaotao();
         setContentCbxXeploai();
     }
@@ -129,7 +181,6 @@ public class EmployeeInfo extends JDialog {
 
         panelRight = new javax.swing.JPanel();
         spnNamTotNghiep = new javax.swing.JSpinner();
-        txtTrinhDoVanHoa = new javax.swing.JTextField();
         cbxChuyenNganh = new javax.swing.JComboBox<>();
         cbxUniversity = new javax.swing.JComboBox<>();
         btnFa = new javax.swing.JButton();
@@ -150,6 +201,7 @@ public class EmployeeInfo extends JDialog {
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         btnRank = new javax.swing.JButton();
+        txtTrinhDoVanHoa = new javax.swing.JFormattedTextField();
         panelLeft = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -161,10 +213,7 @@ public class EmployeeInfo extends JDialog {
         jLabel19 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        txtCMND = new javax.swing.JTextField();
         txtNoiCapCMND = new javax.swing.JTextField();
-        txtNgaycapHC = new javax.swing.JTextField();
-        txtSoHoChieu = new javax.swing.JTextField();
         txtNoiCapHC = new javax.swing.JTextField();
         cbxHonNhan = new javax.swing.JComboBox<>();
         cbxTonGiao = new javax.swing.JComboBox<>();
@@ -173,13 +222,16 @@ public class EmployeeInfo extends JDialog {
         cbxGiaDinh = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNgayHetHC = new javax.swing.JTextField();
-        txtNgayCapCMND = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        txtNgayHetHC = new javax.swing.JFormattedTextField();
+        txtNgayCapCMND = new javax.swing.JFormattedTextField();
+        txtNgaycapHC = new javax.swing.JFormattedTextField();
+        txtSoHoChieu = new javax.swing.JFormattedTextField();
+        txtCMND = new javax.swing.JFormattedTextField();
         panelTop = new javax.swing.JPanel();
         txtMaNV = new javax.swing.JTextField();
         txtTen = new javax.swing.JTextField();
@@ -198,9 +250,9 @@ public class EmployeeInfo extends JDialog {
         cbxSex = new javax.swing.JComboBox<>();
         txtMaCC = new javax.swing.JTextField();
         txtNguyenQuan = new javax.swing.JTextField();
-        txtNgaysinh = new javax.swing.JTextField();
         panelImage = new javax.swing.JPanel();
         cbxNguyenQuan = new javax.swing.JComboBox<>();
+        txtNgaysinh = new javax.swing.JFormattedTextField();
         panelButton = new javax.swing.JPanel();
         btSave = new javax.swing.JButton();
         btEdit = new javax.swing.JButton();
@@ -214,6 +266,14 @@ public class EmployeeInfo extends JDialog {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         setForeground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         panelRight.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 204, 255))); // NOI18N
@@ -222,28 +282,24 @@ public class EmployeeInfo extends JDialog {
         panelRight.setLayout(new java.awt.GridBagLayout());
 
         spnNamTotNghiep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spnNamTotNghiep.setModel(new javax.swing.SpinnerNumberModel(2010, 1960, 2100, 1));
         spnNamTotNghiep.setMinimumSize(new java.awt.Dimension(140, 30));
         spnNamTotNghiep.setPreferredSize(new java.awt.Dimension(140, 30));
+        spnNamTotNghiep.setValue(2015);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         panelRight.add(spnNamTotNghiep, gridBagConstraints);
 
-        txtTrinhDoVanHoa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTrinhDoVanHoa.setMaximumSize(new java.awt.Dimension(320, 30));
-        txtTrinhDoVanHoa.setMinimumSize(new java.awt.Dimension(316, 30));
-        txtTrinhDoVanHoa.setPreferredSize(new java.awt.Dimension(316, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelRight.add(txtTrinhDoVanHoa, gridBagConstraints);
-
         cbxChuyenNganh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbxChuyenNganh.setMinimumSize(new java.awt.Dimension(280, 30));
         cbxChuyenNganh.setPreferredSize(new java.awt.Dimension(280, 30));
+        cbxChuyenNganh.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxChuyenNganhItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -446,6 +502,15 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnRank, gridBagConstraints);
 
+        try {
+            txtTrinhDoVanHoa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTrinhDoVanHoa.setMinimumSize(new java.awt.Dimension(316, 30));
+        txtTrinhDoVanHoa.setPreferredSize(new java.awt.Dimension(316, 30));
+        panelRight.add(txtTrinhDoVanHoa, new java.awt.GridBagConstraints());
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
@@ -477,7 +542,7 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 7, 0, 0);
         panelLeft.add(jLabel16, gridBagConstraints);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -552,22 +617,6 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelLeft.add(jLabel20, gridBagConstraints);
 
-        txtCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtCMND.setMinimumSize(new java.awt.Dimension(160, 30));
-        txtCMND.setPreferredSize(new java.awt.Dimension(160, 30));
-        txtCMND.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCMNDActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtCMND, gridBagConstraints);
-
         txtNoiCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNoiCapCMND.setMinimumSize(new java.awt.Dimension(391, 30));
         txtNoiCapCMND.setPreferredSize(new java.awt.Dimension(391, 30));
@@ -578,27 +627,6 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         panelLeft.add(txtNoiCapCMND, gridBagConstraints);
-
-        txtNgaycapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgaycapHC.setMinimumSize(new java.awt.Dimension(160, 30));
-        txtNgaycapHC.setPreferredSize(new java.awt.Dimension(160, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNgaycapHC, gridBagConstraints);
-
-        txtSoHoChieu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtSoHoChieu.setMinimumSize(new java.awt.Dimension(160, 30));
-        txtSoHoChieu.setPreferredSize(new java.awt.Dimension(160, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtSoHoChieu, gridBagConstraints);
 
         txtNoiCapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNoiCapHC.setMinimumSize(new java.awt.Dimension(391, 30));
@@ -680,6 +708,7 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         panelLeft.add(jLabel2, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -688,26 +717,8 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         panelLeft.add(jLabel3, gridBagConstraints);
-
-        txtNgayHetHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgayHetHC.setMinimumSize(new java.awt.Dimension(100, 30));
-        txtNgayHetHC.setPreferredSize(new java.awt.Dimension(100, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNgayHetHC, gridBagConstraints);
-
-        txtNgayCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgayCapCMND.setMinimumSize(new java.awt.Dimension(102, 30));
-        txtNgayCapCMND.setPreferredSize(new java.awt.Dimension(102, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNgayCapCMND, gridBagConstraints);
 
         jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton8.setText("...");
@@ -753,6 +764,48 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         panelLeft.add(jButton9, gridBagConstraints);
+
+        txtNgayHetHC.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        txtNgayHetHC.setMinimumSize(new java.awt.Dimension(125, 30));
+        txtNgayHetHC.setPreferredSize(new java.awt.Dimension(125, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        panelLeft.add(txtNgayHetHC, gridBagConstraints);
+
+        txtNgayCapCMND.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        txtNgayCapCMND.setMinimumSize(new java.awt.Dimension(125, 30));
+        txtNgayCapCMND.setPreferredSize(new java.awt.Dimension(125, 30));
+        panelLeft.add(txtNgayCapCMND, new java.awt.GridBagConstraints());
+
+        txtNgaycapHC.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        txtNgaycapHC.setMinimumSize(new java.awt.Dimension(150, 30));
+        txtNgaycapHC.setPreferredSize(new java.awt.Dimension(150, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtNgaycapHC, gridBagConstraints);
+
+        txtSoHoChieu.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###############"))));
+        txtSoHoChieu.setMinimumSize(new java.awt.Dimension(150, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtSoHoChieu, gridBagConstraints);
+
+        txtCMND.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###############"))));
+        txtCMND.setMinimumSize(new java.awt.Dimension(150, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtCMND, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -870,6 +923,7 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 15;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelTop.add(jLabel14, gridBagConstraints);
 
@@ -913,7 +967,6 @@ public class EmployeeInfo extends JDialog {
 
         cbxSex.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbxSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
-        cbxSex.setSelectedIndex(-1);
         cbxSex.setMinimumSize(new java.awt.Dimension(75, 30));
         cbxSex.setPreferredSize(new java.awt.Dimension(75, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -948,33 +1001,19 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         panelTop.add(txtNguyenQuan, gridBagConstraints);
 
-        txtNgaysinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgaysinh.setMinimumSize(new java.awt.Dimension(150, 30));
-        txtNgaysinh.setPreferredSize(new java.awt.Dimension(150, 30));
-        txtNgaysinh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNgaysinhActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtNgaysinh, gridBagConstraints);
-
         panelImage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hình ảnh", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 204, 255))); // NOI18N
         panelImage.setMinimumSize(new java.awt.Dimension(130, 170));
-        panelImage.setPreferredSize(new java.awt.Dimension(130, 170));
+        panelImage.setPreferredSize(new java.awt.Dimension(130, 162));
 
         javax.swing.GroupLayout panelImageLayout = new javax.swing.GroupLayout(panelImage);
         panelImage.setLayout(panelImageLayout);
         panelImageLayout.setHorizontalGroup(
             panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 118, Short.MAX_VALUE)
         );
         panelImageLayout.setVerticalGroup(
             panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 147, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -999,6 +1038,14 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelTop.add(cbxNguyenQuan, gridBagConstraints);
+
+        txtNgaysinh.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        txtNgaysinh.setMinimumSize(new java.awt.Dimension(150, 30));
+        txtNgaysinh.setPreferredSize(new java.awt.Dimension(150, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        panelTop.add(txtNgaysinh, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1075,7 +1122,9 @@ public class EmployeeInfo extends JDialog {
     }//GEN-LAST:event_btSaveActionPerformed
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
-        stateButton(false);
+//        stateButton(false);
+        if(validateInput())
+            dispose();
     }//GEN-LAST:event_btEditActionPerformed
 
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
@@ -1097,14 +1146,6 @@ public class EmployeeInfo extends JDialog {
     private void txtMaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNVActionPerformed
-
-    private void txtNgaysinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaysinhActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNgaysinhActionPerformed
-
-    private void txtCMNDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCMNDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCMNDActionPerformed
 
     private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
         // TODO add your handling code here:
@@ -1140,6 +1181,25 @@ public class EmployeeInfo extends JDialog {
         if(k != null)
             setContentCbxChuyenNganh(k.getMaKhoa());
     }//GEN-LAST:event_cbxKhoaDaoTaoItemStateChanged
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        setEmployee(null);
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        setEmployee(null);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void cbxChuyenNganhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxChuyenNganhItemStateChanged
+        // TODO add your handling code here:
+        Object selectedItem =  cbxChuyenNganh.getSelectedItem();
+        Chuyennganh c = (Chuyennganh) selectedItem;
+        cbxTrinhDoDaoTao.removeAllItems();
+        if(c != null)
+            setContentCbxTrinhdoDaotao(c.getMaNganh());
+    }//GEN-LAST:event_cbxChuyenNganhItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1243,22 +1303,22 @@ public class EmployeeInfo extends JDialog {
     private javax.swing.JPanel panelRight;
     private javax.swing.JPanel panelTop;
     private javax.swing.JSpinner spnNamTotNghiep;
-    private javax.swing.JTextField txtCMND;
+    private javax.swing.JFormattedTextField txtCMND;
     private javax.swing.JTextField txtHoDem;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtMaCC;
     private javax.swing.JTextField txtMaNV;
-    private javax.swing.JTextField txtNgayCapCMND;
-    private javax.swing.JTextField txtNgayHetHC;
-    private javax.swing.JTextField txtNgaycapHC;
-    private javax.swing.JTextField txtNgaysinh;
+    private javax.swing.JFormattedTextField txtNgayCapCMND;
+    private javax.swing.JFormattedTextField txtNgayHetHC;
+    private javax.swing.JFormattedTextField txtNgaycapHC;
+    private javax.swing.JFormattedTextField txtNgaysinh;
     private javax.swing.JTextField txtNguyenQuan;
     private javax.swing.JTextField txtNoiCapCMND;
     private javax.swing.JTextField txtNoiCapHC;
     private javax.swing.JTextField txtNoiSinh;
-    private javax.swing.JTextField txtSoHoChieu;
+    private javax.swing.JFormattedTextField txtSoHoChieu;
     private javax.swing.JTextField txtTen;
-    private javax.swing.JTextField txtTrinhDoVanHoa;
+    private javax.swing.JFormattedTextField txtTrinhDoVanHoa;
     // End of variables declaration//GEN-END:variables
 
         public void setContentCbxQuocTich(){
@@ -1336,8 +1396,12 @@ public class EmployeeInfo extends JDialog {
         }
     }
 
-    private void setContentCbxTrinhdoDaotao() {
-//        TrinhdoDaotaob
+    private void setContentCbxTrinhdoDaotao(int idChuyennganh) {
+        ChuyennganhBLL bll = new ChuyennganhBLL();
+        List<TrinhdoDaotao> list = bll.findTrinhdoDaotao(idChuyennganh);
+        for(TrinhdoDaotao t : list){
+            cbxTrinhDoDaoTao.addItem(t);
+        }
     }
 
     private void setContentCbxNoiDaotao() {
@@ -1356,13 +1420,16 @@ public class EmployeeInfo extends JDialog {
         }
     }
     
-    private Date frmDate(String date) throws ParseException{
+    private java.sql.Date frmDate(String date) throws ParseException{
         if(date == null)
             return null;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	java.util.Date dateUtil;
         dateUtil = sdf.parse(date);
-        return dateUtil;
+        System.out.println(dateUtil + "," + dateUtil.getTime());
+        java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
+        System.out.println(dateSql);
+        return dateSql;
     }
     
     private Tinhthanh getNguyenquanByCombobox() {
@@ -1415,6 +1482,12 @@ public class EmployeeInfo extends JDialog {
         return (Nghenghiep) cbxNgheNghiep.getSelectedItem();
     }
     
+    private TrinhdoDaotao getTrinhdoByCombobox() {
+        if(cbxTrinhDoDaoTao.getSelectedIndex() == -1)
+            return null;
+        return (TrinhdoDaotao) cbxTrinhDoDaoTao.getSelectedItem();
+    }
+    
     private boolean validateInput(){
         try {
             String maNV = txtMaNV.getText();
@@ -1433,6 +1506,43 @@ public class EmployeeInfo extends JDialog {
             String ngayCapHC = (txtNgaycapHC.getText());
             String hetHanHC = (txtNgayHetHC.getText());
             String ngayCapCmnd = (txtNgayCapCMND.getText());
+            
+            try{
+                frmDate(ngaysinh);
+            }catch(ParseException e){
+                JOptionPane.showMessageDialog(this, "Nhap sai ngay!");
+                txtNgaysinh.requestFocus();
+                return false;
+            }
+            // ngay cap k bat buoc
+            if(!ngayCapHC.equals("")){
+                try{
+                    frmDate(ngayCapHC);
+                }catch(ParseException e){
+                JOptionPane.showMessageDialog(this, "Nhap sai ngay!");
+                txtNgaycapHC.requestFocus();
+                return false;
+                }
+            }
+            if(!hetHanHC.equals("")){
+                try{
+                    frmDate(hetHanHC);
+                }catch(ParseException e){
+                JOptionPane.showMessageDialog(this, "Nhap sai ngay!");
+                txtNgayHetHC.requestFocus();
+                return false;
+                }
+            }
+            if(!ngayCapCmnd.equals("")){
+                try{
+                    frmDate(ngayCapCmnd);
+                }catch(ParseException e){
+                JOptionPane.showMessageDialog(this, "Nhap sai ngay!");
+                txtNgayCapCMND.requestFocus();
+                return false;
+                }
+            }
+            
             
             /////////////////////////////////////////////
             if(e == null){
@@ -1459,15 +1569,17 @@ public class EmployeeInfo extends JDialog {
                 JOptionPane.showMessageDialog(this, "Nhap Trinh do VH!");
                 txtTrinhDoVanHoa.requestFocus();
                 return false;
-            }else if(cmnd.equals("")){
-                if(noiCapCMND.equals("") && ngayCapCmnd.equals("")){
-                    JOptionPane.showMessageDialog(this, "Khong co CMND!");
+            }else if(cmnd.equals("")){ // not cmnd not have noiCap & ngayCap
+                if(! noiCapCMND.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap CMND!");
+                    txtCMND.requestFocus();
+                    return false;
 //                    e.setCmnd(null);
 //                    e.setCmndNgaycap(null);
 //                    e.setNoicapCmnd(null);
                     
-                }else{
-                    JOptionPane.showMessageDialog(this, "Nhap CMND, ngay cap, noi cap!");
+                }else if ( ! ngayCapCmnd.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap CMND!");
                     txtCMND.requestFocus();
                     return false;
                 }
@@ -1486,16 +1598,22 @@ public class EmployeeInfo extends JDialog {
                     e.setCmndNgaycap(frmDate(ngayCapCmnd));
                     e.setNoicapCmnd(noiCapCMND);
                 }
-            }else if(soHoChieu.equals("")){
-                if(noiCapHC.equals("") && ngayCapHC.equals("") && hetHanHC.equals("")){
-                    JOptionPane.showMessageDialog(this, "Khong co Ho chieu!");
+            }else if(soHoChieu.equals("")){ // khong ho chieu
+                if( ! noiCapHC.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap Ho chieu!");
+                    txtSoHoChieu.requestFocus();
+                    return false;
 //                    e.setSohochieu(null);
 //                    e.setNgaycapHochieu(null);
 //                    e.setNoicapHochieu(null);
 //                    e.setHethanHochieu(null);
                     
-                }else{
-                    JOptionPane.showMessageDialog(this, "Nhap Ho chieu, ngay cap, noi cap!");
+                }else if( ! ngayCapHC.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap Ho chieu!");
+                    txtSoHoChieu.requestFocus();
+                    return false;
+                }else if( ! hetHanHC.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap Ho chieu!");
                     txtSoHoChieu.requestFocus();
                     return false;
                 }
@@ -1523,19 +1641,12 @@ public class EmployeeInfo extends JDialog {
             }
             
                 //////////////////////////////////
-                e.setMaNv(maNV);
-                e.setMaChamcong(maCC);
-                e.setTenHoDem(tenHoDem);
-                e.setTen(ten);
-                e.setNoisinh(noiSinh);
+                
     //            e.setNoicapCmnd(noiCapCMND);
     //            e.setSohochieu(soHoChieu);  
     //            e.setNoicapHochieu(noiCapHC);
     //            e.setCmnd(cmnd);
-//                e.setTrinhdovanhoa(trinhDoVH);
-//                e.setNamtotnghiep(namTotNghiep);
-
-//                e.setNgaySinh(frmDate(ngaysinh));
+                
     //            e.setNgaycapHochieu(frmDate(ngayCapHC));
     //            e.setHethanHochieu(frmDate(hetHanHC));
     //            e.setCmndNgaycap(frmDate(ngayCapCmnd));
@@ -1551,21 +1662,38 @@ public class EmployeeInfo extends JDialog {
                 }else{
                     e.setTinhtrangHonnhan(cbxHonNhan.getSelectedIndex() == 0);
                 }
+                
+                e.setMaNv(maNV);
+                e.setMaChamcong(maCC);
+                e.setTenHoDem(tenHoDem);
+                e.setTen(ten);
+                e.setNoisinh(noiSinh);
+                e.setTrinhdovanhoa(trinhDoVH);
+                e.setNamtotnghiep(namTotNghiep);
+                e.setNgaySinh(frmDate(ngaysinh));
 
                 e.setNguyenquan(getNguyenquanByCombobox());
-//                e.setIdTp(getTpGdByCombobox());
-//                e.setMaDantoc(getDantocByCombobox());
-//                e.setMaTongiao(getTongiaoByCombobox());
-//                e.setQuoctich(getQuoctichByCombobox());
-//                e.setChuyennganh(getChuyennganhByCombobox());
-//                e.setMaLoai(getXeploaiByCombobox());
-//                e.setMaNghe(getNghenghiepByCombobox());
+                e.setIdTp(getTpGdByCombobox());
+                e.setMaDantoc(getDantocByCombobox());
+                e.setMaTongiao(getTongiaoByCombobox());
+                e.setQuoctich(getQuoctichByCombobox());
+                
+                e.setMaLoai(getXeploaiByCombobox());
+                e.setMaNghe(getNghenghiepByCombobox());
+                
+                // set Chuyen nganh
+                Chuyennganh c = getChuyennganhByCombobox();
+                c.setMaTrinhdo(getTrinhdoByCombobox());
+                e.setChuyennganh(c);
 
                 return true;
             
         } catch (ParseException ex) {
             Logger.getLogger(EmployeeInfo.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(this, ex);
             return false;
         }
     }
+
+    
 }

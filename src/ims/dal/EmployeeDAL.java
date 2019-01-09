@@ -51,7 +51,7 @@ public class EmployeeDAL extends BaseDAL{
     
     public void save(Employee e) throws Exception{        
         SessionFactory ssf = HIbernateUtil.getSessionFactory();
-        Session ss =ssf.openSession();
+        Session ss =ssf.getCurrentSession();
         ss.beginTransaction();
         ss.save(e);
         ss.getTransaction().commit();
@@ -66,16 +66,23 @@ public class EmployeeDAL extends BaseDAL{
         ssf.close();
     }
     public void update(Employee e) throws Exception{
-        session.beginTransaction();
-        session.saveOrUpdate(e);
-        session.getTransaction().commit();
-        close();
+        SessionFactory ssf = HIbernateUtil.getSessionFactory();
+        Session ss =ssf.openSession();
+        ss.getTransaction().begin();
+        ss.saveOrUpdate(e);
+        ss.getTransaction().commit();
+        if(ss.isOpen()){
+            ss.close();
+        }
     }
     public List<Employee> getAll() throws Exception{
         List<Employee> result = new ArrayList<>();
-        result = session.createQuery("from Employee").list();
+        SessionFactory ssf = HIbernateUtil.getSessionFactory();
+        Session ss =ssf.getCurrentSession();
+        ss.beginTransaction();
+        result = ss.createQuery("from Employee order by maNv").list();
         System.out.println(result.size());
-        close();
+        ss.close();
         return result;
     }
 }

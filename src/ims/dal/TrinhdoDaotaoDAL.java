@@ -24,4 +24,11 @@ public class TrinhdoDaotaoDAL extends BaseDAL{
         close();
         return result;
     }
+    
+//    public List<TrinhdoDaotao> findByChuyennganh() throws Exception{
+//        List<TrinhdoDaotao> result = new ArrayList<>();
+//        result = session.createQuery("from TrinhdoDaotao t where t.").list();
+//        close();
+//        return result;
+//    }
 }
