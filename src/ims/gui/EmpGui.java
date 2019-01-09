@@ -7,7 +7,6 @@ package ims.gui;
 
 import ims.bll.ChuyennganhBLL;
 import ims.bll.DantocBLL;
-import ims.bll.EmployeeBLL;
 import ims.bll.KhoaDaotaoBLL;
 import ims.bll.NghenghiepBLL;
 import ims.bll.QuocgiaBLL;
@@ -28,7 +27,6 @@ import ims.model.Tongiao;
 import ims.model.TrinhdoDaotao;
 import ims.model.TruongDaotao;
 import ims.model.Xeploai;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
@@ -38,8 +36,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -47,12 +43,21 @@ import org.hibernate.cfg.Configuration;
 
 /**
  *
- * @author NAT
+ * @author ANHB
  */
-public class EmployeeInfo extends JDialog {
+public class EmpGui extends javax.swing.JDialog {
 
-    private Employee e;
+    Employee e;
 
+    EmpGui() {}
+    
+    public EmpGui(Frame owner) {
+		super(owner, true);
+                initComponents();
+		setTitle("Them nhan vien");
+                setInfoDialog();
+    }
+    
     public Employee getEmployee() {
         return e;
     }
@@ -60,27 +65,17 @@ public class EmployeeInfo extends JDialog {
     public void setEmployee(Employee employee) {
         this.e = employee;
     }
-    
-    public EmployeeInfo(Frame owner) {
-        super(owner, true);
-        initComponents();
-        setTitle("Them nhan vien");
-        stateButton(false);
-        setInfoDialog();
-        fillInfoCbx();
-    }
     /**
-     * Creates new form Employee
+     * Creates new form EmpGui
      */
-    public EmployeeInfo() {
+    public EmpGui(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        this.setBackground(Color.yellow);
-        stateButton(false);
         setInfoDialog();
+        stateButton(false);
         fillInfoCbx();
-        
     }
-    
+
     private static SessionFactory factory;
     
     private void fillInfoCbx(){
@@ -96,16 +91,7 @@ public class EmployeeInfo extends JDialog {
         setContentCbxNoiDaotao();
         setContentCbxXeploai();
     }
-
-    private  void setInfoDialog() {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        System.out.println("width: "+ getWidth()+ " dimension.getWidth(): "+ dimension.getWidth());
-        System.out.println("width: "+ getHeight()+ " dimension.getWidth(): "+ dimension.getHeight());
-        int x = (int) ((dimension.getWidth() - getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - getHeight()) / 2);
-        setLocation(x, y);        
-        setResizable(true);
-    }
+    
     public void stateButton(boolean value){
         
 //        btNew.setVisible(value);
@@ -117,6 +103,16 @@ public class EmployeeInfo extends JDialog {
         btCancel.setVisible(!value);
         
     }
+        
+    private  void setInfoDialog() {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        System.out.println("width: "+ getWidth()+ " dimension.getWidth(): "+ dimension.getWidth());
+        System.out.println("width: "+ getHeight()+ " dimension.getWidth(): "+ dimension.getHeight());
+        int x = (int) ((dimension.getWidth() - getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - getHeight()) / 2);
+        setLocation(x, y);        
+        setResizable(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -127,6 +123,57 @@ public class EmployeeInfo extends JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        txtSoHoChieu = new javax.swing.JTextField();
+        panelTop = new javax.swing.JPanel();
+        txtMaNV = new javax.swing.JTextField();
+        txtTen = new javax.swing.JTextField();
+        txtHoDem = new javax.swing.JTextField();
+        txtNoiSinh = new javax.swing.JTextField();
+        txtHoTen = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cbxSex = new javax.swing.JComboBox<>();
+        txtMaCC = new javax.swing.JTextField();
+        txtNguyenQuan = new javax.swing.JTextField();
+        txtNgaysinh = new javax.swing.JTextField();
+        panelImage = new javax.swing.JPanel();
+        cbxNguyenQuan = new javax.swing.JComboBox<>();
+        panelLeft = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        txtCMND = new javax.swing.JTextField();
+        txtNoiCapCMND = new javax.swing.JTextField();
+        txtNgaycapHC = new javax.swing.JTextField();
+        txtNoiCapHC = new javax.swing.JTextField();
+        cbxHonNhan = new javax.swing.JComboBox<>();
+        cbxTonGiao = new javax.swing.JComboBox<>();
+        cbxDanToc = new javax.swing.JComboBox<>();
+        cbxQuocTich = new javax.swing.JComboBox<>();
+        cbxGiaDinh = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNgayHetHC = new javax.swing.JTextField();
+        txtNgayCapCMND = new javax.swing.JTextField();
+        jButton8 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         panelRight = new javax.swing.JPanel();
         spnNamTotNghiep = new javax.swing.JSpinner();
         txtTrinhDoVanHoa = new javax.swing.JTextField();
@@ -150,57 +197,6 @@ public class EmployeeInfo extends JDialog {
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         btnRank = new javax.swing.JButton();
-        panelLeft = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        txtCMND = new javax.swing.JTextField();
-        txtNoiCapCMND = new javax.swing.JTextField();
-        txtNgaycapHC = new javax.swing.JTextField();
-        txtSoHoChieu = new javax.swing.JTextField();
-        txtNoiCapHC = new javax.swing.JTextField();
-        cbxHonNhan = new javax.swing.JComboBox<>();
-        cbxTonGiao = new javax.swing.JComboBox<>();
-        cbxDanToc = new javax.swing.JComboBox<>();
-        cbxQuocTich = new javax.swing.JComboBox<>();
-        cbxGiaDinh = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtNgayHetHC = new javax.swing.JTextField();
-        txtNgayCapCMND = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        panelTop = new javax.swing.JPanel();
-        txtMaNV = new javax.swing.JTextField();
-        txtTen = new javax.swing.JTextField();
-        txtHoDem = new javax.swing.JTextField();
-        txtNoiSinh = new javax.swing.JTextField();
-        txtHoTen = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        cbxSex = new javax.swing.JComboBox<>();
-        txtMaCC = new javax.swing.JTextField();
-        txtNguyenQuan = new javax.swing.JTextField();
-        txtNgaysinh = new javax.swing.JTextField();
-        panelImage = new javax.swing.JPanel();
-        cbxNguyenQuan = new javax.swing.JComboBox<>();
         panelButton = new javax.swing.JPanel();
         btSave = new javax.swing.JButton();
         btEdit = new javax.swing.JButton();
@@ -209,12 +205,540 @@ public class EmployeeInfo extends JDialog {
         btCancel = new javax.swing.JButton();
         btClose = new javax.swing.JButton();
 
+        txtSoHoChieu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtSoHoChieu.setMinimumSize(new java.awt.Dimension(160, 30));
+        txtSoHoChieu.setPreferredSize(new java.awt.Dimension(160, 30));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 255, 255));
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelTop.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        panelTop.setMinimumSize(new java.awt.Dimension(1030, 170));
+        panelTop.setPreferredSize(new java.awt.Dimension(1030, 170));
+        panelTop.setLayout(new java.awt.GridBagLayout());
+
+        txtMaNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtMaNV.setMinimumSize(new java.awt.Dimension(230, 30));
+        txtMaNV.setPreferredSize(new java.awt.Dimension(230, 30));
+        txtMaNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaNVActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtMaNV, gridBagConstraints);
+
+        txtTen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTen.setMinimumSize(new java.awt.Dimension(307, 30));
+        txtTen.setPreferredSize(new java.awt.Dimension(307, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtTen, gridBagConstraints);
+
+        txtHoDem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtHoDem.setMinimumSize(new java.awt.Dimension(230, 30));
+        txtHoDem.setPreferredSize(new java.awt.Dimension(230, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtHoDem, gridBagConstraints);
+
+        txtNoiSinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNoiSinh.setMinimumSize(new java.awt.Dimension(680, 30));
+        txtNoiSinh.setPreferredSize(new java.awt.Dimension(680, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtNoiSinh, gridBagConstraints);
+
+        txtHoTen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtHoTen.setMinimumSize(new java.awt.Dimension(230, 30));
+        txtHoTen.setPreferredSize(new java.awt.Dimension(230, 30));
+        txtHoTen.setRequestFocusEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtHoTen, gridBagConstraints);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel10.setText("Mã N.Viên");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(jLabel10, gridBagConstraints);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Họ và đệm");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(jLabel11, gridBagConstraints);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Họ và tên");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(jLabel12, gridBagConstraints);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel13.setText("Nơi sinh");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(jLabel13, gridBagConstraints);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Nguyên quán");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(jLabel14, gridBagConstraints);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Mã chấm công");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 47, 0, 0);
+        panelTop.add(jLabel4, gridBagConstraints);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Tên");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(jLabel5, gridBagConstraints);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Ngày sinh");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(jLabel6, gridBagConstraints);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Giới tính");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 27, 0, 0);
+        panelTop.add(jLabel7, gridBagConstraints);
+
+        cbxSex.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        cbxSex.setSelectedIndex(-1);
+        cbxSex.setMinimumSize(new java.awt.Dimension(75, 30));
+        cbxSex.setPreferredSize(new java.awt.Dimension(75, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(cbxSex, gridBagConstraints);
+
+        txtMaCC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtMaCC.setMinimumSize(new java.awt.Dimension(307, 30));
+        txtMaCC.setPreferredSize(new java.awt.Dimension(307, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtMaCC, gridBagConstraints);
+
+        txtNguyenQuan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNguyenQuan.setMinimumSize(new java.awt.Dimension(450, 30));
+        txtNguyenQuan.setPreferredSize(new java.awt.Dimension(450, 30));
+        txtNguyenQuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNguyenQuanActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtNguyenQuan, gridBagConstraints);
+
+        txtNgaysinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNgaysinh.setMinimumSize(new java.awt.Dimension(150, 30));
+        txtNgaysinh.setPreferredSize(new java.awt.Dimension(150, 30));
+        txtNgaysinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNgaysinhActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelTop.add(txtNgaysinh, gridBagConstraints);
+
+        panelImage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hình ảnh", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 204, 255))); // NOI18N
+        panelImage.setMinimumSize(new java.awt.Dimension(130, 170));
+
+        javax.swing.GroupLayout panelImageLayout = new javax.swing.GroupLayout(panelImage);
+        panelImage.setLayout(panelImageLayout);
+        panelImageLayout.setHorizontalGroup(
+            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelImageLayout.setVerticalGroup(
+            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 29, 0, 4);
+        panelTop.add(panelImage, gridBagConstraints);
+
+        cbxNguyenQuan.setMinimumSize(new java.awt.Dimension(220, 30));
+        cbxNguyenQuan.setPreferredSize(new java.awt.Dimension(220, 30));
+        cbxNguyenQuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxNguyenQuanActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelTop.add(cbxNguyenQuan, gridBagConstraints);
+
+        getContentPane().add(panelTop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 17, -1, -1));
+
+        panelLeft.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 204, 255))); // NOI18N
+        panelLeft.setMinimumSize(new java.awt.Dimension(490, 340));
+        panelLeft.setOpaque(false);
+        panelLeft.setPreferredSize(new java.awt.Dimension(490, 340));
+        panelLeft.setLayout(new java.awt.GridBagLayout());
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setText("Số hộ chiếu");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel17, gridBagConstraints);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel16.setText("Nơi cấp CMND");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(jLabel16, gridBagConstraints);
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel21.setText("TP Gia đình");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel21, gridBagConstraints);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("Số CMND");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel15, gridBagConstraints);
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setText("Quốc tịch");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel24, gridBagConstraints);
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel23.setText("Tôn giáo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel23, gridBagConstraints);
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setText("Ngày cấp HC");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel18, gridBagConstraints);
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setText("Nơi cấp HC");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel19, gridBagConstraints);
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel22.setText("Dân tộc");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel22, gridBagConstraints);
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel20.setText("TT hôn nhân");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        panelLeft.add(jLabel20, gridBagConstraints);
+
+        txtCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCMND.setMinimumSize(new java.awt.Dimension(160, 30));
+        txtCMND.setPreferredSize(new java.awt.Dimension(160, 30));
+        txtCMND.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCMNDActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtCMND, gridBagConstraints);
+
+        txtNoiCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNoiCapCMND.setMinimumSize(new java.awt.Dimension(391, 30));
+        txtNoiCapCMND.setPreferredSize(new java.awt.Dimension(391, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtNoiCapCMND, gridBagConstraints);
+
+        txtNgaycapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNgaycapHC.setMinimumSize(new java.awt.Dimension(160, 30));
+        txtNgaycapHC.setPreferredSize(new java.awt.Dimension(160, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtNgaycapHC, gridBagConstraints);
+
+        txtNoiCapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNoiCapHC.setMinimumSize(new java.awt.Dimension(391, 30));
+        txtNoiCapHC.setPreferredSize(new java.awt.Dimension(391, 30));
+        txtNoiCapHC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNoiCapHCActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtNoiCapHC, gridBagConstraints);
+
+        cbxHonNhan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxHonNhan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã kết hôn", "Độc thân" }));
+        cbxHonNhan.setSelectedIndex(-1);
+        cbxHonNhan.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxHonNhan.setPreferredSize(new java.awt.Dimension(335, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(cbxHonNhan, gridBagConstraints);
+
+        cbxTonGiao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxTonGiao.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxTonGiao.setPreferredSize(new java.awt.Dimension(335, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(cbxTonGiao, gridBagConstraints);
+
+        cbxDanToc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxDanToc.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxDanToc.setPreferredSize(new java.awt.Dimension(335, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(cbxDanToc, gridBagConstraints);
+
+        cbxQuocTich.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxQuocTich.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxQuocTich.setPreferredSize(new java.awt.Dimension(335, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(cbxQuocTich, gridBagConstraints);
+
+        cbxGiaDinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxGiaDinh.setMinimumSize(new java.awt.Dimension(335, 30));
+        cbxGiaDinh.setPreferredSize(new java.awt.Dimension(335, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(cbxGiaDinh, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Ngày cấp");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 1.0;
+        panelLeft.add(jLabel2, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Ngày hết hạn");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
+        panelLeft.add(jLabel3, gridBagConstraints);
+
+        txtNgayHetHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNgayHetHC.setMinimumSize(new java.awt.Dimension(100, 30));
+        txtNgayHetHC.setPreferredSize(new java.awt.Dimension(100, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtNgayHetHC, gridBagConstraints);
+
+        txtNgayCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNgayCapCMND.setMinimumSize(new java.awt.Dimension(102, 30));
+        txtNgayCapCMND.setPreferredSize(new java.awt.Dimension(102, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        panelLeft.add(txtNgayCapCMND, gridBagConstraints);
+
+        jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton8.setText("...");
+        jButton8.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton8, gridBagConstraints);
+
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton7.setText("...");
+        jButton7.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton7, gridBagConstraints);
+
+        jButton11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton11.setText("...");
+        jButton11.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton11, gridBagConstraints);
+
+        jButton12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton12.setText("...");
+        jButton12.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton12, gridBagConstraints);
+
+        jButton9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton9.setText("...");
+        jButton9.setMargin(new java.awt.Insets(1, -4, 1, -4));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        panelLeft.add(jButton9, gridBagConstraints);
+
+        getContentPane().add(panelLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 193, -1, -1));
 
         panelRight.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 204, 255))); // NOI18N
         panelRight.setMinimumSize(new java.awt.Dimension(525, 275));
@@ -446,568 +970,7 @@ public class EmployeeInfo extends JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelRight.add(btnRank, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.gridheight = 10;
-        gridBagConstraints.ipadx = -45;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 6);
-        getContentPane().add(panelRight, gridBagConstraints);
-
-        panelLeft.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 204, 255))); // NOI18N
-        panelLeft.setMinimumSize(new java.awt.Dimension(490, 340));
-        panelLeft.setOpaque(false);
-        panelLeft.setPreferredSize(new java.awt.Dimension(490, 340));
-        panelLeft.setLayout(new java.awt.GridBagLayout());
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel17.setText("Số hộ chiếu");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel17, gridBagConstraints);
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel16.setText("Nơi cấp CMND");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(jLabel16, gridBagConstraints);
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel21.setText("TP Gia đình");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel21, gridBagConstraints);
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel15.setText("Số CMND");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel15, gridBagConstraints);
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel24.setText("Quốc tịch");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel24, gridBagConstraints);
-
-        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel23.setText("Tôn giáo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel23, gridBagConstraints);
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel18.setText("Ngày cấp HC");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel18, gridBagConstraints);
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel19.setText("Nơi cấp HC");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel19, gridBagConstraints);
-
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel22.setText("Dân tộc");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel22, gridBagConstraints);
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel20.setText("TT hôn nhân");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelLeft.add(jLabel20, gridBagConstraints);
-
-        txtCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtCMND.setMinimumSize(new java.awt.Dimension(160, 30));
-        txtCMND.setPreferredSize(new java.awt.Dimension(160, 30));
-        txtCMND.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCMNDActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtCMND, gridBagConstraints);
-
-        txtNoiCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNoiCapCMND.setMinimumSize(new java.awt.Dimension(391, 30));
-        txtNoiCapCMND.setPreferredSize(new java.awt.Dimension(391, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNoiCapCMND, gridBagConstraints);
-
-        txtNgaycapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgaycapHC.setMinimumSize(new java.awt.Dimension(160, 30));
-        txtNgaycapHC.setPreferredSize(new java.awt.Dimension(160, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNgaycapHC, gridBagConstraints);
-
-        txtSoHoChieu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtSoHoChieu.setMinimumSize(new java.awt.Dimension(160, 30));
-        txtSoHoChieu.setPreferredSize(new java.awt.Dimension(160, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtSoHoChieu, gridBagConstraints);
-
-        txtNoiCapHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNoiCapHC.setMinimumSize(new java.awt.Dimension(391, 30));
-        txtNoiCapHC.setPreferredSize(new java.awt.Dimension(391, 30));
-        txtNoiCapHC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNoiCapHCActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNoiCapHC, gridBagConstraints);
-
-        cbxHonNhan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxHonNhan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã kết hôn", "Độc thân" }));
-        cbxHonNhan.setSelectedIndex(-1);
-        cbxHonNhan.setMinimumSize(new java.awt.Dimension(335, 30));
-        cbxHonNhan.setPreferredSize(new java.awt.Dimension(335, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(cbxHonNhan, gridBagConstraints);
-
-        cbxTonGiao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxTonGiao.setMinimumSize(new java.awt.Dimension(335, 30));
-        cbxTonGiao.setPreferredSize(new java.awt.Dimension(335, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(cbxTonGiao, gridBagConstraints);
-
-        cbxDanToc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxDanToc.setMinimumSize(new java.awt.Dimension(335, 30));
-        cbxDanToc.setPreferredSize(new java.awt.Dimension(335, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(cbxDanToc, gridBagConstraints);
-
-        cbxQuocTich.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxQuocTich.setMinimumSize(new java.awt.Dimension(335, 30));
-        cbxQuocTich.setPreferredSize(new java.awt.Dimension(335, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(cbxQuocTich, gridBagConstraints);
-
-        cbxGiaDinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxGiaDinh.setMinimumSize(new java.awt.Dimension(335, 30));
-        cbxGiaDinh.setPreferredSize(new java.awt.Dimension(335, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(cbxGiaDinh, gridBagConstraints);
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Ngày cấp");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 1.0;
-        panelLeft.add(jLabel2, gridBagConstraints);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Ngày hết hạn");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-        panelLeft.add(jLabel3, gridBagConstraints);
-
-        txtNgayHetHC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgayHetHC.setMinimumSize(new java.awt.Dimension(100, 30));
-        txtNgayHetHC.setPreferredSize(new java.awt.Dimension(100, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNgayHetHC, gridBagConstraints);
-
-        txtNgayCapCMND.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgayCapCMND.setMinimumSize(new java.awt.Dimension(102, 30));
-        txtNgayCapCMND.setPreferredSize(new java.awt.Dimension(102, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
-        panelLeft.add(txtNgayCapCMND, gridBagConstraints);
-
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton8.setText("...");
-        jButton8.setMargin(new java.awt.Insets(1, -4, 1, -4));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        panelLeft.add(jButton8, gridBagConstraints);
-
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton7.setText("...");
-        jButton7.setMargin(new java.awt.Insets(1, -4, 1, -4));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        panelLeft.add(jButton7, gridBagConstraints);
-
-        jButton11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton11.setText("...");
-        jButton11.setMargin(new java.awt.Insets(1, -4, 1, -4));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        panelLeft.add(jButton11, gridBagConstraints);
-
-        jButton12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton12.setText("...");
-        jButton12.setMargin(new java.awt.Insets(1, -4, 1, -4));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        panelLeft.add(jButton12, gridBagConstraints);
-
-        jButton9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton9.setText("...");
-        jButton9.setMargin(new java.awt.Insets(1, -4, 1, -4));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        panelLeft.add(jButton9, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.gridheight = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 27, 0, 0);
-        getContentPane().add(panelLeft, gridBagConstraints);
-
-        panelTop.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        panelTop.setMinimumSize(new java.awt.Dimension(1030, 170));
-        panelTop.setPreferredSize(new java.awt.Dimension(1030, 170));
-        panelTop.setLayout(new java.awt.GridBagLayout());
-
-        txtMaNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtMaNV.setMinimumSize(new java.awt.Dimension(230, 30));
-        txtMaNV.setPreferredSize(new java.awt.Dimension(230, 30));
-        txtMaNV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaNVActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtMaNV, gridBagConstraints);
-
-        txtTen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTen.setMinimumSize(new java.awt.Dimension(307, 30));
-        txtTen.setPreferredSize(new java.awt.Dimension(307, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtTen, gridBagConstraints);
-
-        txtHoDem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtHoDem.setMinimumSize(new java.awt.Dimension(230, 30));
-        txtHoDem.setPreferredSize(new java.awt.Dimension(230, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtHoDem, gridBagConstraints);
-
-        txtNoiSinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNoiSinh.setMinimumSize(new java.awt.Dimension(680, 30));
-        txtNoiSinh.setPreferredSize(new java.awt.Dimension(680, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtNoiSinh, gridBagConstraints);
-
-        txtHoTen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtHoTen.setMinimumSize(new java.awt.Dimension(230, 30));
-        txtHoTen.setPreferredSize(new java.awt.Dimension(230, 30));
-        txtHoTen.setRequestFocusEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtHoTen, gridBagConstraints);
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("Mã N.Viên");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(jLabel10, gridBagConstraints);
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setText("Họ và đệm");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(jLabel11, gridBagConstraints);
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel12.setText("Họ và tên");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(jLabel12, gridBagConstraints);
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel13.setText("Nơi sinh");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.ipady = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(jLabel13, gridBagConstraints);
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel14.setText("Nguyên quán");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(jLabel14, gridBagConstraints);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Mã chấm công");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 47, 0, 0);
-        panelTop.add(jLabel4, gridBagConstraints);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Tên");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(jLabel5, gridBagConstraints);
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Ngày sinh");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(jLabel6, gridBagConstraints);
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Giới tính");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.ipadx = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 27, 0, 0);
-        panelTop.add(jLabel7, gridBagConstraints);
-
-        cbxSex.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
-        cbxSex.setSelectedIndex(-1);
-        cbxSex.setMinimumSize(new java.awt.Dimension(75, 30));
-        cbxSex.setPreferredSize(new java.awt.Dimension(75, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(cbxSex, gridBagConstraints);
-
-        txtMaCC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtMaCC.setMinimumSize(new java.awt.Dimension(307, 30));
-        txtMaCC.setPreferredSize(new java.awt.Dimension(307, 30));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtMaCC, gridBagConstraints);
-
-        txtNguyenQuan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNguyenQuan.setMinimumSize(new java.awt.Dimension(450, 30));
-        txtNguyenQuan.setPreferredSize(new java.awt.Dimension(450, 30));
-        txtNguyenQuan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNguyenQuanActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtNguyenQuan, gridBagConstraints);
-
-        txtNgaysinh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNgaysinh.setMinimumSize(new java.awt.Dimension(150, 30));
-        txtNgaysinh.setPreferredSize(new java.awt.Dimension(150, 30));
-        txtNgaysinh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNgaysinhActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        panelTop.add(txtNgaysinh, gridBagConstraints);
-
-        panelImage.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hình ảnh", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(51, 204, 255))); // NOI18N
-        panelImage.setMinimumSize(new java.awt.Dimension(130, 170));
-        panelImage.setPreferredSize(new java.awt.Dimension(130, 170));
-
-        javax.swing.GroupLayout panelImageLayout = new javax.swing.GroupLayout(panelImage);
-        panelImage.setLayout(panelImageLayout);
-        panelImageLayout.setHorizontalGroup(
-            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panelImageLayout.setVerticalGroup(
-            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.insets = new java.awt.Insets(0, 29, 0, 4);
-        panelTop.add(panelImage, gridBagConstraints);
-
-        cbxNguyenQuan.setMinimumSize(new java.awt.Dimension(220, 30));
-        cbxNguyenQuan.setPreferredSize(new java.awt.Dimension(220, 30));
-        cbxNguyenQuan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxNguyenQuanActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelTop.add(cbxNguyenQuan, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 10;
-        gridBagConstraints.gridheight = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(13, 0, 13, 0);
-        getContentPane().add(panelTop, gridBagConstraints);
+        getContentPane().add(panelRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(506, 193, 480, -1));
 
         btSave.setText("Ghi");
         btSave.setMaximumSize(new java.awt.Dimension(40, 23));
@@ -1059,52 +1022,66 @@ public class EmployeeInfo extends JDialog {
         btClose.setPreferredSize(new java.awt.Dimension(75, 23));
         panelButton.add(btClose);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 16;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.insets = new java.awt.Insets(17, 0, 17, 0);
-        getContentPane().add(panelButton, gridBagConstraints);
+        getContentPane().add(panelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 497, -1, 63));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
-        if(validateInput())
-            dispose();
-    }//GEN-LAST:event_btSaveActionPerformed
-
-    private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
-        stateButton(false);
-    }//GEN-LAST:event_btEditActionPerformed
-
-    private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
-         stateButton(true);// TODO add your handling code here:
-    }//GEN-LAST:event_btCancelActionPerformed
-
-    private void btnUniversityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUniversityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUniversityActionPerformed
-
-    private void txtNoiCapHCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoiCapHCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNoiCapHCActionPerformed
-
-    private void txtNguyenQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNguyenQuanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNguyenQuanActionPerformed
 
     private void txtMaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNVActionPerformed
 
+    private void txtNguyenQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNguyenQuanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNguyenQuanActionPerformed
+
     private void txtNgaysinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaysinhActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNgaysinhActionPerformed
 
+    private void cbxNguyenQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNguyenQuanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxNguyenQuanActionPerformed
+
     private void txtCMNDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCMNDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCMNDActionPerformed
+
+    private void txtNoiCapHCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoiCapHCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNoiCapHCActionPerformed
+
+    private void cbxUniversityItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxUniversityItemStateChanged
+        // TODO add your handling code here:
+        Object selectedItem = cbxUniversity.getSelectedItem();
+        TruongDaotao t = (TruongDaotao) selectedItem;
+
+        cbxChuyenNganh.removeAllItems();
+        cbxKhoaDaoTao.removeAllItems();
+        setContentCbxKhoaDaotao(t.getIdDaotao());
+    }//GEN-LAST:event_cbxUniversityItemStateChanged
+
+    private void btnUniversityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUniversityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUniversityActionPerformed
+
+    private void cbxKhoaDaoTaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxKhoaDaoTaoItemStateChanged
+        // TODO add your handling code here:
+        Object selectedItem =  cbxKhoaDaoTao.getSelectedItem();
+        KhoaDaotao k = (KhoaDaotao) selectedItem;
+        cbxChuyenNganh.removeAllItems();
+        if(k != null)
+        setContentCbxChuyenNganh(k.getMaKhoa());
+    }//GEN-LAST:event_cbxKhoaDaoTaoItemStateChanged
+
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+        if(validateInput())
+        dispose();
+    }//GEN-LAST:event_btSaveActionPerformed
+
+    private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
+        stateButton(false);
+    }//GEN-LAST:event_btEditActionPerformed
 
     private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
         // TODO add your handling code here:
@@ -1118,28 +1095,9 @@ public class EmployeeInfo extends JDialog {
         }
     }//GEN-LAST:event_btPrintActionPerformed
 
-    private void cbxNguyenQuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNguyenQuanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxNguyenQuanActionPerformed
-
-    private void cbxUniversityItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxUniversityItemStateChanged
-        // TODO add your handling code here:
-        Object selectedItem = cbxUniversity.getSelectedItem();
-        TruongDaotao t = (TruongDaotao) selectedItem;
-        
-        cbxChuyenNganh.removeAllItems();
-        cbxKhoaDaoTao.removeAllItems();
-        setContentCbxKhoaDaotao(t.getIdDaotao());
-    }//GEN-LAST:event_cbxUniversityItemStateChanged
-
-    private void cbxKhoaDaoTaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxKhoaDaoTaoItemStateChanged
-        // TODO add your handling code here:
-        Object selectedItem =  cbxKhoaDaoTao.getSelectedItem();
-        KhoaDaotao k = (KhoaDaotao) selectedItem;
-        cbxChuyenNganh.removeAllItems();
-        if(k != null)
-            setContentCbxChuyenNganh(k.getMaKhoa());
-    }//GEN-LAST:event_cbxKhoaDaoTaoItemStateChanged
+    private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
+        stateButton(true);// TODO add your handling code here:
+    }//GEN-LAST:event_btCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1158,21 +1116,27 @@ public class EmployeeInfo extends JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EmployeeInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmpGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EmployeeInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmpGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EmployeeInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmpGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EmployeeInfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EmpGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmployeeInfo().setVisible(true);
+                EmpGui dialog = new EmpGui(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
@@ -1260,7 +1224,6 @@ public class EmployeeInfo extends JDialog {
     private javax.swing.JTextField txtTen;
     private javax.swing.JTextField txtTrinhDoVanHoa;
     // End of variables declaration//GEN-END:variables
-
         public void setContentCbxQuocTich(){
         QuocgiaBLL qbll = new QuocgiaBLL();
         List<Quocgia> list = qbll.getAll();
@@ -1532,10 +1495,10 @@ public class EmployeeInfo extends JDialog {
     //            e.setSohochieu(soHoChieu);  
     //            e.setNoicapHochieu(noiCapHC);
     //            e.setCmnd(cmnd);
-//                e.setTrinhdovanhoa(trinhDoVH);
-//                e.setNamtotnghiep(namTotNghiep);
+                e.setTrinhdovanhoa(trinhDoVH);
+                e.setNamtotnghiep(namTotNghiep);
 
-//                e.setNgaySinh(frmDate(ngaysinh));
+                e.setNgaySinh(frmDate(ngaysinh));
     //            e.setNgaycapHochieu(frmDate(ngayCapHC));
     //            e.setHethanHochieu(frmDate(hetHanHC));
     //            e.setCmndNgaycap(frmDate(ngayCapCmnd));
@@ -1553,13 +1516,13 @@ public class EmployeeInfo extends JDialog {
                 }
 
                 e.setNguyenquan(getNguyenquanByCombobox());
-//                e.setIdTp(getTpGdByCombobox());
-//                e.setMaDantoc(getDantocByCombobox());
-//                e.setMaTongiao(getTongiaoByCombobox());
-//                e.setQuoctich(getQuoctichByCombobox());
-//                e.setChuyennganh(getChuyennganhByCombobox());
-//                e.setMaLoai(getXeploaiByCombobox());
-//                e.setMaNghe(getNghenghiepByCombobox());
+                e.setIdTp(getTpGdByCombobox());
+                e.setMaDantoc(getDantocByCombobox());
+                e.setMaTongiao(getTongiaoByCombobox());
+                e.setQuoctich(getQuoctichByCombobox());
+                e.setChuyennganh(getChuyennganhByCombobox());
+                e.setMaLoai(getXeploaiByCombobox());
+                e.setMaNghe(getNghenghiepByCombobox());
 
                 return true;
             

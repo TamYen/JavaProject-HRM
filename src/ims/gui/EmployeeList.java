@@ -138,14 +138,14 @@ public class EmployeeList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNewActionPerformed
-        EmployeeInfo emGui= new EmployeeInfo();
+        EmployeeInfo emGui= new EmployeeInfo(this);
         emGui.setTitle("Thêm nhân viên");
         emGui.setVisible(true);
         
         Employee newEmployee = emGui.getEmployee();
 
         if (newEmployee != null) {
-            System.out.println(newEmployee);
+//            System.out.println(newEmployee.getChuyennganh().getMaTrinhdo().getTrinhdo());
             try {
                 employeeBLL.save(newEmployee);
                 listEmp.add(newEmployee);

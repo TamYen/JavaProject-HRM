@@ -22,12 +22,14 @@ public class EmployeeBLL {
         employeeDAL = new EmployeeDAL(Employee.class);
     }
     
-    public void save(Employee e){
-        try {
+    public void save(Employee e) throws Exception{
+        
             employeeDAL.save(e);
-        } catch (Exception ex) {
-            Logger.getLogger(EmployeeBLL.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+    }
+    
+    public void update(Employee e) throws Exception{
+            employeeDAL.update(e);
     }
     
     public List<Employee> getAll() throws Exception{

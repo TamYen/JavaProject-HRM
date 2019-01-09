@@ -8,6 +8,9 @@ package ims.dal;
 import ims.model.Employee;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -46,21 +49,25 @@ public class EmployeeDAL extends BaseDAL{
 //        }
 //    }
     
-    public void save(Employee e) throws Exception{
-        session.beginTransaction();
-        session.save(e);
-        session.getTransaction().commit();
-        close();
+    public void save(Employee e) throws Exception{        
+        SessionFactory ssf = HIbernateUtil.getSessionFactory();
+        Session ss =ssf.openSession();
+        ss.beginTransaction();
+        ss.save(e);
+        ss.getTransaction().commit();
+        ssf.close();
     }
     public void delete(Employee e) throws Exception{
-        session.beginTransaction();
-        session.delete(e);
-        session.getTransaction().commit();
-        close();
+        SessionFactory ssf = HIbernateUtil.getSessionFactory();
+        Session ss =ssf.getCurrentSession();
+        ss.beginTransaction();
+        ss.delete(e);
+        ss.getTransaction().commit();
+        ssf.close();
     }
     public void update(Employee e) throws Exception{
         session.beginTransaction();
-        session.update(e);
+        session.saveOrUpdate(e);
         session.getTransaction().commit();
         close();
     }
