@@ -509,7 +509,12 @@ public class EmployeeInfo extends JDialog {
         }
         txtTrinhDoVanHoa.setMinimumSize(new java.awt.Dimension(316, 30));
         txtTrinhDoVanHoa.setPreferredSize(new java.awt.Dimension(316, 30));
-        panelRight.add(txtTrinhDoVanHoa, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        panelRight.add(txtTrinhDoVanHoa, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -646,7 +651,6 @@ public class EmployeeInfo extends JDialog {
 
         cbxHonNhan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbxHonNhan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã kết hôn", "Độc thân" }));
-        cbxHonNhan.setSelectedIndex(-1);
         cbxHonNhan.setMinimumSize(new java.awt.Dimension(335, 30));
         cbxHonNhan.setPreferredSize(new java.awt.Dimension(335, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1537,7 +1541,7 @@ public class EmployeeInfo extends JDialog {
             String ngayCapHC = (txtNgaycapHC.getText());
             String hetHanHC = (txtNgayHetHC.getText());
             String ngayCapCmnd = (txtNgayCapCMND.getText());
-            
+            ////////////////////////////////////////////////
             try{
                 frmDate(ngaysinh);
             }catch(ParseException e){
@@ -1573,12 +1577,53 @@ public class EmployeeInfo extends JDialog {
                 return false;
                 }
             }
-            
-            
-            /////////////////////////////////////////////
             if(e == null){
                 e = new Employee();
             }
+            e.setMaNv(maNV);
+                e.setMaChamcong(maCC);
+                e.setTenHoDem(tenHoDem);
+                e.setTen(ten);
+                e.setNoisinh(noiSinh);
+                e.setTrinhdovanhoa(trinhDoVH);
+                e.setNamtotnghiep(namTotNghiep);
+                e.setNgaySinh(frmDate(ngaysinh));
+
+                e.setNguyenquan(getNguyenquanByCombobox());
+                e.setIdTp(getTpGdByCombobox());
+                e.setMaDantoc(getDantocByCombobox());
+                e.setMaTongiao(getTongiaoByCombobox());
+                e.setQuoctich(getQuoctichByCombobox());
+                
+                e.setMaLoai(getXeploaiByCombobox());
+                e.setMaNghe(getNghenghiepByCombobox());
+                e.setChuyennganh(getChuyennganhByCombobox());
+                
+                e.setSohochieu(soHoChieu);
+                try{
+                    e.setNgaycapHochieu(frmDate(ngayCapHC));
+                }catch(ParseException ex){
+                    e.setNgaycapHochieu(null);
+                }
+                    
+                e.setNoicapHochieu(noiCapHC);
+                try{
+                    e.setHethanHochieu(frmDate(hetHanHC));
+                }catch(ParseException ex){
+                    e.setHethanHochieu(null);
+                }
+                    
+                e.setCmnd(cmnd);
+                e.setNoicapCmnd(noiCapCMND); 
+                try{
+                    e.setCmndNgaycap(frmDate(ngayCapCmnd));
+                }catch(ParseException ex){
+                    e.setCmndNgaycap(null);
+                }
+                    
+                    
+            /////////////////////////////////////////////
+            
             
             if(maNV.equals("")){
                 JOptionPane.showMessageDialog(this, "Nhap ma NV!");
@@ -1600,44 +1645,12 @@ public class EmployeeInfo extends JDialog {
                 JOptionPane.showMessageDialog(this, "Nhap Trinh do VH!");
                 txtTrinhDoVanHoa.requestFocus();
                 return false;
-            }else if(cmnd.equals("")){ // not cmnd not have noiCap & ngayCap
-                if(! noiCapCMND.equals("")){
-                    JOptionPane.showMessageDialog(this, "Nhap CMND!");
-                    txtCMND.requestFocus();
-                    return false;
-//                    e.setCmnd(null);
-//                    e.setCmndNgaycap(null);
-//                    e.setNoicapCmnd(null);
-                    
-                }else if ( ! ngayCapCmnd.equals("")){
-                    JOptionPane.showMessageDialog(this, "Nhap CMND!");
-                    txtCMND.requestFocus();
-                    return false;
-                }
-            }else if(!cmnd.equals("")){
-                if(noiCapCMND.equals("")){
-                    JOptionPane.showMessageDialog(this, "Nhap noi cap CMND!");
-                    txtNoiCapCMND.requestFocus();
-                    return false;
-                }else
-                if(ngayCapCmnd.equals("")){
-                    JOptionPane.showMessageDialog(this, "Nhap ngay cap CMND!");
-                    txtNgayCapCMND.requestFocus();
-                    return false;
-                }else{
-                    e.setCmnd(cmnd);
-                    e.setCmndNgaycap(frmDate(ngayCapCmnd));
-                    e.setNoicapCmnd(noiCapCMND);
-                }
-            }else if(soHoChieu.equals("")){ // khong ho chieu
+            }
+            if(soHoChieu.equals("")){ // khong ho chieu
                 if( ! noiCapHC.equals("")){
                     JOptionPane.showMessageDialog(this, "Nhap Ho chieu!");
                     txtSoHoChieu.requestFocus();
                     return false;
-//                    e.setSohochieu(null);
-//                    e.setNgaycapHochieu(null);
-//                    e.setNoicapHochieu(null);
-//                    e.setHethanHochieu(null);
                     
                 }else if( ! ngayCapHC.equals("")){
                     JOptionPane.showMessageDialog(this, "Nhap Ho chieu!");
@@ -1648,39 +1661,47 @@ public class EmployeeInfo extends JDialog {
                     txtSoHoChieu.requestFocus();
                     return false;
                 }
-            }else if(!soHoChieu.equals("")){
+            }
+            if(!soHoChieu.equals("")){
                 if(noiCapHC.equals("")){
                     JOptionPane.showMessageDialog(this, "Nhap noi cap Ho chieu!");
                     txtNoiCapHC.requestFocus();
                     return false;
-                }else
-                if( ngayCapHC.equals("")){
+                }else if( ngayCapHC.equals("")){
                     JOptionPane.showMessageDialog(this, "Nhap ngay cap Ho chieu!");
                     txtNgaycapHC.requestFocus();
                     return false;
-                }else
-                if( hetHanHC.equals("")){
+                }else if( hetHanHC.equals("")){
                     JOptionPane.showMessageDialog(this, "Nhap ngay het han Ho chieu!");
                     txtNgayHetHC.requestFocus();
                     return false;
-                }else{
-                    e.setSohochieu(soHoChieu);
-                    e.setNgaycapHochieu(frmDate(ngayCapHC));
-                    e.setNoicapHochieu(noiCapHC);
-                    e.setHethanHochieu(frmDate(hetHanHC));
+                }
+            }
+            if(cmnd.equals("")){ // not cmnd not noiCap & ngayCap
+                if(! noiCapCMND.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap CMND!");
+                    txtCMND.requestFocus();
+                    return false;
+                    
+                }else if ( ! ngayCapCmnd.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap CMND!");
+                    txtCMND.requestFocus();
+                    return false;
+                }
+            }
+            if(!cmnd.equals("")){
+                if(noiCapCMND.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap noi cap CMND!");
+                    txtNoiCapCMND.requestFocus();
+                    return false;
+                }else if(ngayCapCmnd.equals("")){
+                    JOptionPane.showMessageDialog(this, "Nhap ngay cap CMND!");
+                    txtNgayCapCMND.requestFocus();
+                    return false;
                 }
             }
             
                 //////////////////////////////////
-                
-    //            e.setNoicapCmnd(noiCapCMND);
-    //            e.setSohochieu(soHoChieu);  
-    //            e.setNoicapHochieu(noiCapHC);
-    //            e.setCmnd(cmnd);
-                
-    //            e.setNgaycapHochieu(frmDate(ngayCapHC));
-    //            e.setHethanHochieu(frmDate(hetHanHC));
-    //            e.setCmndNgaycap(frmDate(ngayCapCmnd));
 
                 if(cbxSex.getSelectedIndex() == -1){
                     e.setSex(null);
@@ -1694,24 +1715,7 @@ public class EmployeeInfo extends JDialog {
                     e.setTinhtrangHonnhan(cbxHonNhan.getSelectedIndex() == 0);
                 }
                 
-                e.setMaNv(maNV);
-                e.setMaChamcong(maCC);
-                e.setTenHoDem(tenHoDem);
-                e.setTen(ten);
-                e.setNoisinh(noiSinh);
-                e.setTrinhdovanhoa(trinhDoVH);
-                e.setNamtotnghiep(namTotNghiep);
-                e.setNgaySinh(frmDate(ngaysinh));
-
-                e.setNguyenquan(getNguyenquanByCombobox());
-                e.setIdTp(getTpGdByCombobox());
-                e.setMaDantoc(getDantocByCombobox());
-                e.setMaTongiao(getTongiaoByCombobox());
-                e.setQuoctich(getQuoctichByCombobox());
                 
-                e.setMaLoai(getXeploaiByCombobox());
-                e.setMaNghe(getNghenghiepByCombobox());
-                e.setChuyennganh(getChuyennganhByCombobox());
 
                 return true;
             

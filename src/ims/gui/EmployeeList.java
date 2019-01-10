@@ -34,6 +34,7 @@ public class EmployeeList extends javax.swing.JFrame {
     EmployeeBLL employeeBLL;
     private SessionFactory factory;
     Employee empForEdit;
+    
 
     /** Creates new form EmployeeList */
     public EmployeeList() {
@@ -105,6 +106,11 @@ public class EmployeeList extends javax.swing.JFrame {
         btnDelete.setFocusable(false);
         btnDelete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDelete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnDelete);
         jToolBar1.add(jSeparator3);
 
@@ -172,6 +178,12 @@ public class EmployeeList extends javax.swing.JFrame {
                 updateTableEmployee(newEmployee, newRow);
                 
             } catch (Exception ex) {
+                try {
+                    employeeBLL.closeSession();
+                } catch (Exception ex1) {
+                    JOptionPane.showMessageDialog(this, ex1, "Error", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(EmployeeList.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 String message = "Could not save new employee. Error:\n" + ex.getMessage();
                 JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -195,13 +207,19 @@ public class EmployeeList extends javax.swing.JFrame {
 
             
 	if (editedEmployee != null) {
-//            try {
+            try {
                 employeeBLL.update(editedEmployee);		
                 updateTableEmployee(editedEmployee,selectedRow);                                
-//            } catch (Exception ex) {
-//                String message = "Could not update Employee. Error:\n" + ex.getMessage();
-//                JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);			
-//            }				
+            } catch (Exception ex) {
+                try {
+                    employeeBLL.closeSession();
+                } catch (Exception ex1) {
+                    JOptionPane.showMessageDialog(this, ex1, "Error", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(EmployeeList.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+                String message = "Could not update Employee. Error:\n" + ex.getMessage();
+                JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);			
+            }				
         }
     }//GEN-LAST:event_btnEditEmpActionPerformed
 
@@ -209,6 +227,33 @@ public class EmployeeList extends javax.swing.JFrame {
         // TODO add your handling code here:
         formWindowOpened();
     }//GEN-LAST:event_btnShowActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tbEmp.getSelectedRow();
+        Employee empForDelete;
+        if(selectedRow >= 0){
+            empForDelete = listEmp.get(selectedRow);
+            if (empForDelete != null) {
+                    try{
+                        String message = String.format( "Xoa '%s'?", empForDelete.toString()); 
+                        int answer = JOptionPane.showConfirmDialog(this, message, "Xac nhan", JOptionPane.YES_NO_OPTION);
+                        if (answer == JOptionPane.OK_OPTION) {                                
+                            employeeBLL.delete(empForDelete);
+                            listEmp.remove(empForDelete);
+                            updateTableEmployee(selectedRow);
+                        }
+                    }catch(Exception e){
+                        try {
+                            employeeBLL.closeSession();
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(this, ex, "Error", JOptionPane.ERROR_MESSAGE);
+                            Logger.getLogger(EmployeeList.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+        }				
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,9 +291,12 @@ public class EmployeeList extends javax.swing.JFrame {
     }
 
     private void formWindowOpened(){
+        
+        
         try {
             listEmp = employeeBLL.getAll();
             DefaultTableModel model = (DefaultTableModel) tbEmp.getModel();
+            model.setRowCount(0);
             int row = 0;
             for (Iterator iterator = listEmp.iterator(); iterator.hasNext();) {
                 Employee emp = (Employee) iterator.next();
@@ -257,6 +305,12 @@ public class EmployeeList extends javax.swing.JFrame {
                 row++;
             }
         } catch (Exception ex) {
+            try {
+                employeeBLL.closeSession();
+            } catch (Exception ex1) {
+                JOptionPane.showMessageDialog(this, ex1, "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(EmployeeList.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             Logger.getLogger(EmployeeList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -289,6 +343,11 @@ public class EmployeeList extends javax.swing.JFrame {
         model.setValueAt((emp.getNgaySinh() == null? null :emp.getNgaySinh().toString()), row, 5);
         model.setValueAt(emp.getNoisinh(), row, 6);
         model.setValueAt(emp.getNguyenquan().getTentinhthanh(), row, 7);
+    }
+
+    private void updateTableEmployee(int selectedRow) {
+        DefaultTableModel model = (DefaultTableModel) tbEmp.getModel();
+        model.removeRow(selectedRow);
     }
 
 }

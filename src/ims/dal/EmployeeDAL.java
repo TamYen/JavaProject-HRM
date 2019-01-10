@@ -8,7 +8,7 @@ package ims.dal;
 import ims.model.Employee;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -18,71 +18,54 @@ import org.hibernate.SessionFactory;
  */
 public class EmployeeDAL extends BaseDAL{
 
-//    private Session session;
-//    private SessionFactory sessionFactory;
 
-    public EmployeeDAL(Class annotatedClass) {
-        super(annotatedClass);
+    public EmployeeDAL() {
+        super();
     }
 
-//    public EmployeeDAL() {
-//        try {
-//            connect();
-//        } catch (Exception ex) {
-//            Logger.getLogger(EmployeeDAL.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    public void connect() throws Exception
-//    {
-//        try{
-//            sessionFactory = new Configuration().configure().addAnnotatedClass(Employee.class).buildSessionFactory();
-//            session = sessionFactory.openSession();
-//        }catch(HibernateException ex){
-//            throw ex;
-//        }
+//    private static Session getSession(){
+//        sessionFactory = HIbernateUtil.getSessionFactory();
+//        session =sessionFactory.getCurrentSession();
+//        return session;
 //    }
 //    
-//    public void close() throws Exception{
-//        if(session != null){
+//    public void closeSession() throws HibernateException{
+//        if(session != null || session.isOpen()){
 //            session.close();
 //            sessionFactory.close();
 //        }
 //    }
     
     public void save(Employee e) throws Exception{        
-        SessionFactory ssf = HIbernateUtil.getSessionFactory();
-        Session ss =ssf.getCurrentSession();
-        ss.beginTransaction();
-        ss.save(e);
-        ss.getTransaction().commit();
-        ssf.close();
+        session.beginTransaction();
+        session.save(e);
+        session.getTransaction().commit();
+//        close();
     }
     public void delete(Employee e) throws Exception{
-        SessionFactory ssf = HIbernateUtil.getSessionFactory();
-        Session ss =ssf.getCurrentSession();
-        ss.beginTransaction();
-        ss.delete(e);
-        ss.getTransaction().commit();
-        ssf.close();
+        session.beginTransaction();
+        session.delete(e);
+        session.getTransaction().commit();
+//        close();
     }
     public void update(Employee e) throws Exception{
-        SessionFactory ssf = HIbernateUtil.getSessionFactory();
-        Session ss =ssf.openSession();
-        ss.getTransaction().begin();
-        ss.saveOrUpdate(e);
-        ss.getTransaction().commit();
-        if(ss.isOpen()){
-            ss.close();
-        }
+        session.beginTransaction();
+        session.saveOrUpdate(e);
+        session.getTransaction().commit();
+//        close();
+//        if(ss.isOpen()){
+//            ss.close();
+//            ssf.close();
+//        }
+//        Session ss =ssf.openSession();
+//        ss.getTransaction().begin();
     }
     public List<Employee> getAll() throws Exception{
         List<Employee> result = new ArrayList<>();
-        SessionFactory ssf = HIbernateUtil.getSessionFactory();
-        Session ss =ssf.getCurrentSession();
-        ss.beginTransaction();
-        result = ss.createQuery("from Employee order by maNv").list();
-        System.out.println(result.size());
-        ss.close();
+//        session.beginTransaction();
+        result = session.createQuery("from Employee order by maNv").list();
+//        close();
         return result;
     }
+    
 }

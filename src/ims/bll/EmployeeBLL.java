@@ -19,7 +19,7 @@ public class EmployeeBLL {
     private EmployeeDAL employeeDAL;
 
     public EmployeeBLL() {
-        employeeDAL = new EmployeeDAL(Employee.class);
+        employeeDAL = new EmployeeDAL();
     }
     
     public void save(Employee e) throws Exception{
@@ -39,5 +39,18 @@ public class EmployeeBLL {
     public List<Employee> getAll() throws Exception{
         System.out.println("@@@@@@@@@@@@@@@@@@@@ EmployeeBLL: List<Employee> getAll(");
         return employeeDAL.getAll();
+    }
+
+    public void delete(Employee empForDelete) {
+        try {
+            employeeDAL.delete(empForDelete);
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeBLL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void closeSession() throws Exception{
+        employeeDAL.close();
+        employeeDAL.connect();
     }
 }
