@@ -35,6 +35,7 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -80,13 +81,13 @@ public class EmployeeInfo extends JDialog {
         txtCMND.setText(e.getCmnd());
         ////////////////////
         if(e.getCmndNgaycap() != null)
-            txtNgayCapCMND.setText(e.getCmndNgaycap().toString());
+            txtNgayCapCMND.setText(parseDate(e.getCmndNgaycap().toString()));
         if(e.getNgaySinh() != null)
-            txtNgaysinh.setText(e.getNgaySinh().toString());
+            txtNgaysinh.setText(parseDate(e.getNgaySinh().toString()));
         if(e.getNgaycapHochieu() != null)
-            txtNgaycapHC.setText(e.getNgaycapHochieu().toString());
+            txtNgaycapHC.setText(parseDate(e.getNgaycapHochieu().toString()));
         if(e.getHethanHochieu() != null)
-            txtNgayHetHC.setText(e.getHethanHochieu().toString());
+            txtNgayHetHC.setText(parseDate(e.getHethanHochieu().toString()));
         txtNoiCapHC.setText(e.getNoicapHochieu());
         /////////////////
         if(e.getTinhtrangHonnhan() == null){
@@ -1726,5 +1727,17 @@ public class EmployeeInfo extends JDialog {
         }
     }
 
+    public String parseDate(String s){
+        ArrayList date = new ArrayList();
+        for(int i =0; i<s.length(); i++){
+            date.add(s.charAt(i));
+        }
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@" +date.size());
+        String dd = date.get(8).toString()+date.get(9).toString();
+        String mm = date.get(5).toString()+date.get(6).toString();
+        String yyyy = date.get(0).toString()+date.get(1).toString()+date.get(2).toString()+date.get(3).toString();
+        String dfm = dd + "-" + mm + "-" + yyyy;
+        return dfm;
+    }
     
 }
